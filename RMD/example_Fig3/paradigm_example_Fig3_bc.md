@@ -649,7 +649,7 @@ out_attractor = pheatmap(attractor_coefficient_to_plot[c(1,2,ind_df),], col = co
                          cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Attractor Transition")    
 ```
 
-![](paradigm_example_Fig3_bc_files/figure-html/FigS3_attractor-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/RMD/example_Fig3/FigS3_attractor-1.png)<!-- -->
 
 We trained the model and learned the associations between a drug exposure and a given cluster self and attractor transitions. A negative coefficient value indicates that a drug exposure is associated with decreased cluster self/attractor transition probability, and a positive coefficient value indicates that a drug exposure is associated with increased cluster self/attracotr transition probability. 
 
