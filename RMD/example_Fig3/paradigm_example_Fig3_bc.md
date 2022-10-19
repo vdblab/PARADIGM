@@ -638,7 +638,7 @@ out_self = pheatmap(self_coefficient_to_plot[c(1,2,ind_df),], col = colorRampPal
                     cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Self Transition")
 ```
 
-![](paradigm_example_Fig3_bc_files/figure-html/FigS3_self-1.png)<!-- -->
+![](PARADIGM/RMD/example_Fig3/FigS3_self-1.png)<!-- -->
 
 And cluster attractor transitions. 
 
