@@ -638,7 +638,7 @@ out_self = pheatmap(self_coefficient_to_plot[c(1,2,ind_df),], col = colorRampPal
                     cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Self Transition")
 ```
 
-![](PARADIGM/RMD/example_Fig3/FigS3_self-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/f8d1bcfc803916a92b0ed849ee751cb7deff8c88/RMD/example_Fig3/FigS3_self-1.png)<!-- -->
 
 And cluster attractor transitions. 
 
@@ -752,7 +752,7 @@ ggplot(data = response_score_feature_aggregate_to_plot,
 ## Coordinate system already present. Adding new coordinate system, which will replace the existing one.
 ```
 
-![](paradigm_example_Fig3_bc_files/figure-html/FigS4-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/f8d1bcfc803916a92b0ed849ee751cb7deff8c88/RMD/example_Fig3/FigS4-1.png)<!-- -->
 
 As a sanity check, we correlated the bacteria response scores for alpha-diversity and for Enterococcus relative abundance. We expected and observed a significant negative correlation, indicating that drug exposures which are associated with increased Enterococcus relative abundnace, are associated with decreased alpha-diversity, and vice-versa. In allo-HCT, Enterococcus expansion typically leads to a low-diversity state of Enterococcus domination and dysbiosis. 
 
@@ -772,5 +772,5 @@ ggplot(data = response_score_feature_aggregate,
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](paradigm_example_Fig3_bc_files/figure-html/Fig3d-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/f8d1bcfc803916a92b0ed849ee751cb7deff8c88/RMD/example_Fig3/Fig3d-1.png)<!-- -->
 
