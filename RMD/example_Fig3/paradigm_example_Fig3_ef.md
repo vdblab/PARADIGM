@@ -305,7 +305,7 @@ ggplot(response_score_invivo_comparison_to_plot, aes(y = AUC, x = response_score
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](paradigm_example_Fig3_ef_files/figure-html/Fig3e-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/63abad23455e69b9eab0943cd74fac6fe119603d/RMD/example_Fig3/figures/Fig3e-1.png)<!-- -->
 
 We observed a potential enrichment of significant *in vitro* hits (significant anti-bacteria activity of a given drug against a given species) in the lower left quadrant (with negative bacteria response scores), indicating that these species-drug interactions are also predicted to be inhibitory in this study. We can perform statistical test to validate this observation. 
 
@@ -356,7 +356,7 @@ ggplot(response_score_invivo_comparison_to_plot,
   xlab("In vitro inhibition")
 ```
 
-![](paradigm_example_Fig3_ef_files/figure-html/Fig3f-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/63abad23455e69b9eab0943cd74fac6fe119603d/RMD/example_Fig3/figures/Fig3f-1.png)<!-- -->
 
 We could perform T-test comparing the response scores between *in vitro* hits and non-hits to zero. The response scores for *in vitro* hits are significantly different from 0 and lower than zero, indicating inhibitory associations in this human dataset. 
 
