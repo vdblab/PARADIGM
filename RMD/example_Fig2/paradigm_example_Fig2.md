@@ -186,7 +186,7 @@ ggplot(tblsample_discovery, aes(x=tsne1,y=tsne2,col=factor(dominant_genus))) +
   theme(legend.position = "none")
 ```
 
-![](paradigm_example_Fig2_files/figure-html/Fig2a-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/d249eaea648c8f8f83a481c0b51563391bd9d001/RMD/example_Fig2/figures/Fig2a-1.png)<!-- -->
 
 Taxonomic profiles (relative abundance) of shotgun sequencing data from MetaPhlAn 3.0are outlined in a separate table. Each row is a taxonomic classification, each column is a sample. Some samples with numeric names will have the letter "X" preceeding the numeric names, and the character "X" needs to be removed. 
 
