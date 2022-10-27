@@ -192,7 +192,7 @@ gghistogram(data = patient_level_response_score_Enterococcus, x = "rc_norm") +
 ## `bins`.
 ```
 
-![](paradigm_example_Fig5_files/figure-html/Fig5b-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/060c9074971ea8ff90d8dedb61d67d85e9aaed8f/RMD/example_Fig5/figures/Fig5b-1.png)<!-- -->
 
 Let's explore whether *Enterococcus*-specific patient response scores (based solely on drug exposures between day -14 to 14 relative to HCT) are predictive of future microbiome trajectories (based on stool samples collected between day 14 to 45 relative to HCT). 
 
@@ -220,7 +220,7 @@ ggplot(data = genus_abundance_correlation_Enterococcus, aes(x=rc_norm, y = log10
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](paradigm_example_Fig5_files/figure-html/genus_abundance_prediction_Enterococcus_example-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/060c9074971ea8ff90d8dedb61d67d85e9aaed8f/RMD/example_Fig5/figures/genus_abundance_prediction_Enterococcus_example-1.png)<!-- -->
 
 To reproduce Fig 5c, we looped the script through all four features of interest. 
 
@@ -331,7 +331,7 @@ ggplot(data = genus_abundance_aggregate, aes(x=rc_norm, y = log10(genus_abundanc
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](paradigm_example_Fig5_files/figure-html/Fig5c_MSKCC-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/060c9074971ea8ff90d8dedb61d67d85e9aaed8f/RMD/example_Fig5/figures/Fig5c_MSKCC-1.png)<!-- -->
 
 Similarly, we could calculate the patient response scores for the Duke validation cohort. For this cohort, we only evaluated antibiotics exposures. 
 
@@ -445,4 +445,4 @@ ggplot(data = genus_abundance_aggregate_duke, aes(x=rc_norm, y = log10(genus_abu
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](paradigm_example_Fig5_files/figure-html/Fig5c_Duke-1.png)<!-- -->
+![]([paradigm_example_Fig5_files/figure-html/Fig5c_Duke-1.png](https://github.com/ChiLNguyen/PARADIGM/blob/060c9074971ea8ff90d8dedb61d67d85e9aaed8f/RMD/example_Fig5/figures/Fig5c_Duke-1.png))<!-- -->
