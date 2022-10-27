@@ -2,11 +2,13 @@
 title: "PARADIGM example: Figure 2"
 author: "Chi L. Nguyen"
 date: "10/17/2022"
-output: "github_document"
+output:
+  html_document:
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, dev = c('png', 'postscript'))
 
 library(tidyverse)
 library(pheatmap)
@@ -18,37 +20,48 @@ library(reshape2)
 Cohort characteristics are outlined in 'tblsample' table; ASV counts and taxonomic profiles are outlined in 'tblcounts' table. 
 'tblsample' table contains samples from the entire study, which is divided into the MSKCC discovery cohort, the MSKCC validation cohort and the Duke validation cohort. 
 
-```{r, echo=TRUE}
+```{r load_data}
 
-tblcounts = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblcounts_master_table_deid_MSKCC_9674_Duke_500_101222.csv")
+tblcounts = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
 
-tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9674_Duke_500_101222.csv")
+tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+
+tblshotgun = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblshotgun_MetaPhlAn_classification_filtered_1180samples_102422.csv")
 
 head(tblcounts)
 head(tblsample)
 
+length(unique(tblsample$oligos_id))
+length(unique(tblsample$sampleid))
+table(tblsample$set)
+
+length(unique(tblcounts$oligos_id))
+length(unique(tblcounts$sampleid))
 ```
 
 Taxonomic and cluster characteristics as plotted in Figure 2 are from the MSKCC discovery cohort. 
 
-```{r, echo=TRUE}
+```{r select_discovery_cohort}
 
 tblsample_discovery = tblsample %>% 
   filter(set == "discovery")
+
+length(unique(tblsample_discovery$sampleid))
+length(unique(tblsample_discovery$oligos_id))
+
 
 ```
 
 Since the entire cohort is large, we provided the tSNE coordinates we pre-calculated using the R package 'Rtsne'. tSNE analysis was performed on the pairwise Bray-Curtis beta-diversity matrix (which was pre-calculated using QIIME). 
 We first identified the most abundant genus per sample. 
 
-```{r, echo=TRUE}
+```{r dominant_taxa}
 
 genus_abundance_tbl = tblcounts %>% 
   filter(oligos_id %in% tblsample_discovery$oligos_id) %>% 
   group_by(oligos_id, genus) %>% 
   summarise(.,total_frequency = sum(count/count_total)) %>% 
-  spread(genus, total_frequency, fill = 0) %>% 
-  group_by(oligos_id)
+  spread(genus, total_frequency, fill = 0) 
 
 dominant_genus = colnames(genus_abundance_tbl[,-1])[apply(genus_abundance_tbl[,-1], 1, which.max)]
 tblsample_discovery$dominant_genus = dominant_genus
@@ -73,20 +86,22 @@ ggplot(tblsample_discovery, aes(x=tsne1,y=tsne2,col=factor(dominant_genus))) +
   theme(legend.position = "none")
 ```
 
-Taxonomic profiles (relative abundance) of shotgun sequencing data from MetaPhlAn 3.0are outlined in a separate table. Each row is a taxonmic classification, each column is a sample. Some samples with numeric names will have the letter "X" preceeding the numeric names, and the character "X" needs to be removed. 
+Taxonomic profiles (relative abundance) of shotgun sequencing data from MetaPhlAn 3.0are outlined in a separate table. Each row is a taxonomic classification, each column is a sample. Some samples with numeric names will have the letter "X" preceeding the numeric names, and the character "X" needs to be removed. 
 
-```{r, echo=TRUE}
+```{r shotgun_examine}
 
-tblshotgun = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblshotgun_MetaPhlAn_classification.csv")
 colnames(tblshotgun) = gsub("X(\\d)", "\\1", colnames(tblshotgun))
 
 tblshotgun[1:6,1:10]
+
+table(tblsample$shotgun_available)
+dim(tblshotgun)
 
 ```
 
 The pre-calculated tSNE coordinates for shotgun data are outlined in 'tblsample' table. We selected shotgun samples in the discovery cohort, and selected species classification.  
 
-```{r, echo=TRUE}
+```{r shotgun_cleanup}
 
 tblshotgun_species = tblshotgun[grepl("s__", tblshotgun$clade_name) , ]
 tblshotgun_species$clade_name = gsub(".*s__", "", tblshotgun_species$clade_name)
@@ -101,7 +116,7 @@ tblshotgun_species_relative_abundance[1:6, 1:6]
 
 We then identified the most abundant species per shotgun sample. 
 
-```{r, echo=TRUE}
+```{r shotgun_dominant_species}
 
 shotgun_dominant_species = colnames(tblshotgun_species_relative_abundance)[apply(tblshotgun_species_relative_abundance, 1, which.max)]
 shotgun_dominant_species_df = cbind.data.frame(sampleid = rownames(tblshotgun_species_relative_abundance),
@@ -114,7 +129,7 @@ We extracted the tSNE coordinates for shotgun sample, assigned a color for each 
 ```{r Fig2b, echo=TRUE}
 
 tblshotgun_plot_tsne = tblsample %>% 
-  filter(shotgun_available == "Yes") %>% 
+  filter(shotgun_available == "yes") %>% 
   filter(set == "discovery") %>% 
   left_join(shotgun_dominant_species_df, by = "sampleid")
 
@@ -151,7 +166,7 @@ ggplot(tblsample_discovery, aes(x=tsne1,y=tsne2,col=factor(cluster_assignment)))
 
 We then visualized the taxonomic characteristics of each cluster by plotting a heatmap of the top 20 most abundant genera (based on 16S sequencing data) in the MSKCC discovery cohort. First, we identified the top 20 most abundant genera and their relative abundance per sample. 
 
-```{r, echo=TRUE}
+```{r top20_genus}
 
 col_choice = names(sort(colMeans(genus_abundance_tbl[,-1]),decreasing=T)[1:20])
 
@@ -176,13 +191,13 @@ rownames(hm) = top20_genus_tbl$oligos_id
 group = data.frame(group = top20_genus_tbl$cluster_assignment)
 rownames(group) = top20_genus_tbl$oligos_id
 
-pheatmap.type(log10(hm+0.00001),annRow=group,show_rownames=FALSE, annotation_colors = mat_colors)
+pheatmap.type(log10(hm+0.0001),annRow=group,show_colnames=FALSE, annotation_colors = mat_colors, doTranspose =T)
 
 ```
 
 We could also visualize the taxonomic characteristics of each cluster by plotting a heatmap of the top 20 most abundant species (based on shotgun metageonomic sequencing) in the MSKCC discovery cohort. First, we identified the top 20 most abundant species in the shotgun data. 
 
-```{r, echo=TRUE}
+```{r top20_species}
 
 col_choice_shotgun = names(sort(colMeans(tblshotgun_species_relative_abundance),decreasing=T)[1:20])
 
@@ -215,7 +230,7 @@ rownames(hm) = top20_species_shotgun_tbl$sampleid
 group = data.frame(group = top20_species_shotgun_tbl$cluster_assignment)
 rownames(group) = top20_species_shotgun_tbl$sampleid
 
-pheatmap.type(log10(hm+0.00001),annRow=group,show_rownames=FALSE, annotation_colors = mat_colors)
+pheatmap.type(log10(hm+0.0001),annRow=group,show_colnames=FALSE, annotation_colors = mat_colors, doTranspose =T)
 
 ```
 
@@ -236,7 +251,7 @@ ggplot(tblsample_discovery, aes(y = simpson_reciprocal, x = factor(cluster_assig
 
 To examine cluster dynamics over time, we calculated cluster frequency in a weekly interval between day -28 and 27 relative to HCT. 
 
-```{r, echo=TRUE}
+```{r time_dynamics}
 
 tblsample_discovery_time = tblsample_discovery %>% 
   filter(day_relative_to_hct %in% -28:27) %>% 

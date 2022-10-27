@@ -1,119 +1,177 @@
-PARADIGM example: Figure 2
-================
-Chi L. Nguyen
-10/17/2022
+---
+title: "PARADIGM example: Figure 2"
+author: "Chi L. Nguyen"
+date: "10/17/2022"
+output:
+  html_document:
+    keep_md: yes
+---
 
-Cohort characteristics are outlined in ‘tblsample’ table; ASV counts and
-taxonomic profiles are outlined in ‘tblcounts’ table. ‘tblsample’ table
-contains samples from the entire study, which is divided into the MSKCC
-discovery cohort, the MSKCC validation cohort and the Duke validation
-cohort.
 
-``` r
-tblcounts = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblcounts_master_table_deid_MSKCC_9674_Duke_500_101222.csv")
 
-tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9674_Duke_500_101222.csv")
+Cohort characteristics are outlined in 'tblsample' table; ASV counts and taxonomic profiles are outlined in 'tblcounts' table. 
+'tblsample' table contains samples from the entire study, which is divided into the MSKCC discovery cohort, the MSKCC validation cohort and the Duke validation cohort. 
+
+
+```r
+tblcounts = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+
+tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+
+tblshotgun = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblshotgun_MetaPhlAn_classification_filtered_1180samples_102422.csv")
 
 head(tblcounts)
 ```
 
-    ##   sampleid      oligos_id asv_key count count_total  kingdom     phylum   class
-    ## 1    1533D 1533D..pool938   asv_1    16       21089 Bacteria Firmicutes Bacilli
-    ## 2    1533E 1533E..pool938   asv_1     7       11685 Bacteria Firmicutes Bacilli
-    ## 3    1533F 1533F..pool938   asv_1     7       12841 Bacteria Firmicutes Bacilli
-    ## 4    1533G 1533G..pool938   asv_1    12       14669 Bacteria Firmicutes Bacilli
-    ## 5    1533H 1533H..pool938   asv_1   799        5671 Bacteria Firmicutes Bacilli
-    ## 6    1581A 1581A..pool938   asv_1    39       17800 Bacteria Firmicutes Bacilli
-    ##             order          family        genus              species   color
-    ## 1 Lactobacillales Enterococcaceae Enterococcus Enterococcus_faecium #129246
-    ## 2 Lactobacillales Enterococcaceae Enterococcus Enterococcus_faecium #129246
-    ## 3 Lactobacillales Enterococcaceae Enterococcus Enterococcus_faecium #129246
-    ## 4 Lactobacillales Enterococcaceae Enterococcus Enterococcus_faecium #129246
-    ## 5 Lactobacillales Enterococcaceae Enterococcus Enterococcus_faecium #129246
-    ## 6 Lactobacillales Enterococcaceae Enterococcus Enterococcus_faecium #129246
-    ##   color_shotgun
-    ## 1       #0A572A
-    ## 2       #0A572A
-    ## 3       #0A572A
-    ## 4       #0A572A
-    ## 5       #0A572A
-    ## 6       #0A572A
+```
+##   sampleid      oligos_id asv_key count count_total  kingdom     phylum   class
+## 1    1671K 1671K..pool971   asv_1   217       70762 Bacteria Firmicutes Bacilli
+## 2    1671L 1671L..pool971   asv_1    54       74588 Bacteria Firmicutes Bacilli
+## 3    1671M 1671M..pool971   asv_1   128       78377 Bacteria Firmicutes Bacilli
+## 4    1671N 1671N..pool971   asv_1   116       58586 Bacteria Firmicutes Bacilli
+## 5    1671O 1671O..pool971   asv_1    41       81884 Bacteria Firmicutes Bacilli
+## 6    1671Q 1671Q..pool971   asv_1    66       80089 Bacteria Firmicutes Bacilli
+##              ordr          family        genus              species   color
+## 1 Lactobacillales Enterococcaceae Enterococcus Enterococcus_faecium #129246
+## 2 Lactobacillales Enterococcaceae Enterococcus Enterococcus_faecium #129246
+## 3 Lactobacillales Enterococcaceae Enterococcus Enterococcus_faecium #129246
+## 4 Lactobacillales Enterococcaceae Enterococcus Enterococcus_faecium #129246
+## 5 Lactobacillales Enterococcaceae Enterococcus Enterococcus_faecium #129246
+## 6 Lactobacillales Enterococcaceae Enterococcus Enterococcus_faecium #129246
+##   color_shotgun
+## 1       #0A572A
+## 2       #0A572A
+## 3       #0A572A
+## 4       #0A572A
+## 5       #0A572A
+## 6       #0A572A
+```
 
-``` r
+```r
 head(tblsample)
 ```
 
-    ##   sampleid      oligos_id
-    ## 1    1000A 1000A..pool483
-    ## 2    1000B 1000B..pool483
-    ## 3    1000C 1000C..pool483
-    ## 4    1000D 1000D..pool483
-    ## 5    1000E 1000E..pool483
-    ## 6     1001  1001..pool535
-    ##                                                               PatientID
-    ## 1                                                                  1000
-    ## 2                                                                  1000
-    ## 3                                                                  1000
-    ## 4                                                                  1000
-    ## 5                                                                  1000
-    ## 6 pt_with_samples_1001_1002_1003_1004_1005_1006_1007_1008_1048_1121_152
-    ##   cluster_assignment day_relative_to_hct        set simpson_reciprocal
-    ## 1                  2                  -9  discovery           13.38430
-    ## 2                  4                  -4  discovery            6.24706
-    ## 3                  5                   6  discovery            2.08790
-    ## 4                  5                   9  discovery            2.39139
-    ## 5                  5                  13  discovery            1.48186
-    ## 6                 NA                  -6 validation            8.48545
-    ##       Blautia Enterococcus Erysipelatoclostridium institution      tsne1
-    ## 1 0.406969925  0.000000000            0.005193935       MSKCC -0.7462970
-    ## 2 0.023031435  0.000000000            0.161220044       MSKCC  0.0951663
-    ## 3 0.000000000  0.001073784            0.000000000       MSKCC  0.2074600
-    ## 4 0.001466583  0.001780851            0.000000000       MSKCC  0.2446640
-    ## 5 0.000000000  0.003923877            0.000000000       MSKCC  0.2555170
-    ## 6 0.322351421  0.000000000            0.136950904       MSKCC -0.8626910
-    ##        tsne2 shotgun_available tsne1_shotgun tsne2_shotgun
-    ## 1 -0.0408929                No            NA            NA
-    ## 2  0.1467790                No            NA            NA
-    ## 3  0.4915400                No            NA            NA
-    ## 4  0.2800610               Yes    -0.7709889     -0.351067
-    ## 5  0.4738010                No            NA            NA
-    ## 6  0.0937450                No            NA            NA
-
-Taxonomic and cluster characteristics as plotted in Figure 2 are from
-the MSKCC discovery cohort.
-
-``` r
-tblsample_discovery = tblsample %>% 
-  filter(set == "discovery")
+```
+##   sampleid      oligos_id PatientID cluster_assignment day_relative_to_hct
+## 1    1000A 1000A..pool483      1000                  2                  -9
+## 2    1000B 1000B..pool483      1000                  4                  -4
+## 3    1000C 1000C..pool483      1000                  5                   6
+## 4    1000D 1000D..pool483      1000                  5                   9
+## 5    1000E 1000E..pool483      1000                  5                  13
+## 6    1001A 1001A..pool483      1001                 NA                  -3
+##          set simpson_reciprocal     Blautia Enterococcus Erysipelatoclostridium
+## 1  discovery           13.38430 0.406969925  0.000000000            0.005193935
+## 2  discovery            6.24706 0.023031435  0.000000000            0.161220044
+## 3  discovery            2.08790 0.000000000  0.001073784            0.000000000
+## 4  discovery            2.39139 0.001466583  0.001780851            0.000000000
+## 5  discovery            1.48186 0.000000000  0.003923877            0.000000000
+## 6 validation           14.71820 0.371913367  0.001793351            0.065250379
+##   institution      tsne1      tsne2 shotgun_available tsne1_shotgun
+## 1       MSKCC -0.7462970 -0.0408929                no            NA
+## 2       MSKCC  0.0951663  0.1467790                no            NA
+## 3       MSKCC  0.2074600  0.4915400                no            NA
+## 4       MSKCC  0.2446640  0.2800610               yes    -0.7709889
+## 5       MSKCC  0.2555170  0.4738010                no            NA
+## 6       MSKCC -0.6486000  0.0798572                no            NA
+##   tsne2_shotgun
+## 1            NA
+## 2            NA
+## 3            NA
+## 4     -0.351067
+## 5            NA
+## 6            NA
 ```
 
-Since the entire cohort is large, we provided the tSNE coordinates we
-pre-calculated using the R package ‘Rtsne’. tSNE analysis was performed
-on the pairwise Bray-Curtis beta-diversity matrix (which was
-pre-calculated using QIIME). We first identified the most abundant genus
-per sample.
+```r
+length(unique(tblsample$oligos_id))
+```
 
-``` r
+```
+## [1] 9640
+```
+
+```r
+length(unique(tblsample$sampleid))
+```
+
+```
+## [1] 9640
+```
+
+```r
+table(tblsample$set)
+```
+
+```
+## 
+##       discovery      validation validation_Duke 
+##            7454            1713             473
+```
+
+```r
+length(unique(tblcounts$oligos_id))
+```
+
+```
+## [1] 9640
+```
+
+```r
+length(unique(tblcounts$sampleid))
+```
+
+```
+## [1] 9640
+```
+
+Taxonomic and cluster characteristics as plotted in Figure 2 are from the MSKCC discovery cohort. 
+
+
+```r
+tblsample_discovery = tblsample %>% 
+  filter(set == "discovery")
+
+length(unique(tblsample_discovery$sampleid))
+```
+
+```
+## [1] 7454
+```
+
+```r
+length(unique(tblsample_discovery$oligos_id))
+```
+
+```
+## [1] 7454
+```
+
+Since the entire cohort is large, we provided the tSNE coordinates we pre-calculated using the R package 'Rtsne'. tSNE analysis was performed on the pairwise Bray-Curtis beta-diversity matrix (which was pre-calculated using QIIME). 
+We first identified the most abundant genus per sample. 
+
+
+```r
 genus_abundance_tbl = tblcounts %>% 
   filter(oligos_id %in% tblsample_discovery$oligos_id) %>% 
   group_by(oligos_id, genus) %>% 
   summarise(.,total_frequency = sum(count/count_total)) %>% 
-  spread(genus, total_frequency, fill = 0) %>% 
-  group_by(oligos_id)
+  spread(genus, total_frequency, fill = 0) 
 ```
 
-    ## `summarise()` has grouped output by 'oligos_id'. You can override using the
-    ## `.groups` argument.
+```
+## `summarise()` has grouped output by 'oligos_id'. You can override using the
+## `.groups` argument.
+```
 
-``` r
+```r
 dominant_genus = colnames(genus_abundance_tbl[,-1])[apply(genus_abundance_tbl[,-1], 1, which.max)]
 tblsample_discovery$dominant_genus = dominant_genus
 ```
 
-We then assigned a color for each genus using the pre-generated color
-scheme in ‘tblcounts’ table.
+We then assigned a color for each genus using the pre-generated color scheme in 'tblcounts' table. 
 
-``` r
+
+```r
 color_scheme_genus = tblcounts %>% 
   select(color, genus) %>% 
   filter(!duplicated(.))
@@ -128,41 +186,56 @@ ggplot(tblsample_discovery, aes(x=tsne1,y=tsne2,col=factor(dominant_genus))) +
   theme(legend.position = "none")
 ```
 
-![](paradigm_example_Fig2_files/figure-gfm/Fig2a-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2a-1.png)<!-- -->
 
-Taxonomic profiles (relative abundance) of shotgun sequencing data from
-MetaPhlAn 3.0are outlined in a separate table. Each row is a taxonmic
-classification, each column is a sample. Some samples with numeric names
-will have the letter “X” preceeding the numeric names, and the character
-“X” needs to be removed.
+Taxonomic profiles (relative abundance) of shotgun sequencing data from MetaPhlAn 3.0are outlined in a separate table. Each row is a taxonomic classification, each column is a sample. Some samples with numeric names will have the letter "X" preceeding the numeric names, and the character "X" needs to be removed. 
 
-``` r
-tblshotgun = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblshotgun_MetaPhlAn_classification.csv")
+
+```r
 colnames(tblshotgun) = gsub("X(\\d)", "\\1", colnames(tblshotgun))
 
 tblshotgun[1:6,1:10]
 ```
 
-    ##                                                                                    clade_name
-    ## 1                                                                                     UNKNOWN
-    ## 2                                                                                  k__Archaea
-    ## 3                                                                 k__Archaea|p__Euryarchaeota
-    ## 4                                              k__Archaea|p__Euryarchaeota|c__Methanobacteria
-    ## 5                        k__Archaea|p__Euryarchaeota|c__Methanobacteria|o__Methanobacteriales
-    ## 6 k__Archaea|p__Euryarchaeota|c__Methanobacteria|o__Methanobacteriales|f__Methanobacteriaceae
-    ##                   NCBI_tax_id 894A    801A 788B 786A 784B 759A 737B 697B
-    ## 1                          -1    0 0.00000    0    0    0    0    0    0
-    ## 2                        2157    0 0.03016    0    0    0    0    0    0
-    ## 3                  2157|28890    0 0.03016    0    0    0    0    0    0
-    ## 4           2157|28890|183925    0 0.03016    0    0    0    0    0    0
-    ## 5      2157|28890|183925|2158    0 0.03016    0    0    0    0    0    0
-    ## 6 2157|28890|183925|2158|2159    0 0.03016    0    0    0    0    0    0
+```
+##                                                                                                          clade_name
+## 1                                                                                                        k__Archaea
+## 2                                                                                       k__Archaea|p__Euryarchaeota
+## 3                                                                    k__Archaea|p__Euryarchaeota|c__Methanobacteria
+## 4                                              k__Archaea|p__Euryarchaeota|c__Methanobacteria|o__Methanobacteriales
+## 5                       k__Archaea|p__Euryarchaeota|c__Methanobacteria|o__Methanobacteriales|f__Methanobacteriaceae
+## 6 k__Archaea|p__Euryarchaeota|c__Methanobacteria|o__Methanobacteriales|f__Methanobacteriaceae|g__Methanobrevibacter
+##                        NCBI_tax_id 894A    801A 788B 786A 784B 759A 737B 697B
+## 1                             2157    0 0.03016    0    0    0    0    0    0
+## 2                       2157|28890    0 0.03016    0    0    0    0    0    0
+## 3                2157|28890|183925    0 0.03016    0    0    0    0    0    0
+## 4           2157|28890|183925|2158    0 0.03016    0    0    0    0    0    0
+## 5      2157|28890|183925|2158|2159    0 0.03016    0    0    0    0    0    0
+## 6 2157|28890|183925|2158|2159|2172    0 0.03016    0    0    0    0    0    0
+```
 
-The pre-calculated tSNE coordinates for shotgun data are outlined in
-‘tblsample’ table. We selected shotgun samples in the discovery cohort,
-and selected species classification.
+```r
+table(tblsample$shotgun_available)
+```
 
-``` r
+```
+## 
+##   no  yes 
+## 8460 1180
+```
+
+```r
+dim(tblshotgun)
+```
+
+```
+## [1] 1161 1182
+```
+
+The pre-calculated tSNE coordinates for shotgun data are outlined in 'tblsample' table. We selected shotgun samples in the discovery cohort, and selected species classification.  
+
+
+```r
 tblshotgun_species = tblshotgun[grepl("s__", tblshotgun$clade_name) , ]
 tblshotgun_species$clade_name = gsub(".*s__", "", tblshotgun_species$clade_name)
 tblshotgun_species_t = t(tblshotgun_species[,-c(1,2)])
@@ -174,43 +247,45 @@ tblshotgun_species_relative_abundance = tblshotgun_species_relative_abundance[sh
 tblshotgun_species_relative_abundance[1:6, 1:6]
 ```
 
-    ##           Methanobrevibacter_oralis Methanobrevibacter_smithii
-    ## 682D                              0                          0
-    ## 276D                              0                          0
-    ## FMT.0099O                         0                          0
-    ## FMT.0099A                         0                          0
-    ## FMT.0094A                         0                          0
-    ## FMT.0093Z                         0                          0
-    ##           Methanosphaera_stadtmanae Actinobaculum_sp_oral_taxon_183
-    ## 682D                              0                               0
-    ## 276D                              0                               0
-    ## FMT.0099O                         0                               0
-    ## FMT.0099A                         0                               0
-    ## FMT.0094A                         0                               0
-    ## FMT.0093Z                         0                               0
-    ##           Actinomyces_cardiffensis Actinomyces_denticolens
-    ## 682D                             0                       0
-    ## 276D                             0                       0
-    ## FMT.0099O                        0                       0
-    ## FMT.0099A                        0                       0
-    ## FMT.0094A                        0                       0
-    ## FMT.0093Z                        0                       0
+```
+##           Methanobrevibacter_oralis Methanobrevibacter_smithii
+## 682D                              0                          0
+## 276D                              0                          0
+## FMT.0099O                         0                          0
+## FMT.0099A                         0                          0
+## FMT.0094A                         0                          0
+## FMT.0093Z                         0                          0
+##           Methanosphaera_stadtmanae Actinobaculum_sp_oral_taxon_183
+## 682D                              0                               0
+## 276D                              0                               0
+## FMT.0099O                         0                               0
+## FMT.0099A                         0                               0
+## FMT.0094A                         0                               0
+## FMT.0093Z                         0                               0
+##           Actinomyces_cardiffensis Actinomyces_denticolens
+## 682D                             0                       0
+## 276D                             0                       0
+## FMT.0099O                        0                       0
+## FMT.0099A                        0                       0
+## FMT.0094A                        0                       0
+## FMT.0093Z                        0                       0
+```
 
-We then identified the most abundant species per shotgun sample.
+We then identified the most abundant species per shotgun sample. 
 
-``` r
+
+```r
 shotgun_dominant_species = colnames(tblshotgun_species_relative_abundance)[apply(tblshotgun_species_relative_abundance, 1, which.max)]
 shotgun_dominant_species_df = cbind.data.frame(sampleid = rownames(tblshotgun_species_relative_abundance),
                                                dominant_species = shotgun_dominant_species)
 ```
 
-We extracted the tSNE coordinates for shotgun sample, assigned a color
-for each species using the pre-generated color scheme in ‘tblcounts’
-table.
+We extracted the tSNE coordinates for shotgun sample, assigned a color for each species using the pre-generated color scheme in 'tblcounts' table. 
 
-``` r
+
+```r
 tblshotgun_plot_tsne = tblsample %>% 
-  filter(shotgun_available == "Yes") %>% 
+  filter(shotgun_available == "yes") %>% 
   filter(set == "discovery") %>% 
   left_join(shotgun_dominant_species_df, by = "sampleid")
 
@@ -228,14 +303,12 @@ ggplot(tblshotgun_plot_tsne , aes(x=tsne1_shotgun,y=tsne2_shotgun,col=factor(dom
   theme(legend.position = "none")
 ```
 
-![](paradigm_example_Fig2_files/figure-gfm/Fig2b-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2b-1.png)<!-- -->
 
-We pre-defined kmeans cluster by applying kmeans() functions to the
-pairwise Bray-Curtis beta-diversity matrix for samples in the MSKCC
-discovery cohort. Kmeans cluster assignments are outlined in the
-‘tblsample’ table.
+We pre-defined kmeans cluster by applying kmeans() functions to the pairwise Bray-Curtis beta-diversity matrix for samples in the MSKCC discovery cohort. Kmeans cluster assignments are outlined in the 'tblsample' table. 
 
-``` r
+
+```r
 colors_asv_beta <- c("#A50026","#D73027","#F46D43","#C2A5CF","#3690C0",
                      "#FDAE61","#5AAE61","#B3E2CD","#762A83","#1B7837")
 
@@ -247,14 +320,12 @@ ggplot(tblsample_discovery, aes(x=tsne1,y=tsne2,col=factor(cluster_assignment)))
   theme(legend.position = "none")
 ```
 
-![](paradigm_example_Fig2_files/figure-gfm/Fig2c-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2c-1.png)<!-- -->
 
-We then visualized the taxonomic characteristics of each cluster by
-plotting a heatmap of the top 20 most abundant genera (based on 16S
-sequencing data) in the MSKCC discovery cohort. First, we identified the
-top 20 most abundant genera and their relative abundance per sample.
+We then visualized the taxonomic characteristics of each cluster by plotting a heatmap of the top 20 most abundant genera (based on 16S sequencing data) in the MSKCC discovery cohort. First, we identified the top 20 most abundant genera and their relative abundance per sample. 
 
-``` r
+
+```r
 col_choice = names(sort(colMeans(genus_abundance_tbl[,-1]),decreasing=T)[1:20])
 
 top20_genus_tbl = tblsample_discovery %>% 
@@ -263,9 +334,10 @@ top20_genus_tbl = tblsample_discovery %>%
   left_join(genus_abundance_tbl %>% select(oligos_id, all_of(col_choice) ), by = "oligos_id")
 ```
 
-We then visualized this information with a heatmap.
+We then visualized this information with a heatmap. 
 
-``` r
+
+```r
 mat_colors <- list(group = colors_asv_beta)
 names(mat_colors$group) <- c(1:10)
 
@@ -276,17 +348,15 @@ rownames(hm) = top20_genus_tbl$oligos_id
 group = data.frame(group = top20_genus_tbl$cluster_assignment)
 rownames(group) = top20_genus_tbl$oligos_id
 
-pheatmap.type(log10(hm+0.00001),annRow=group,show_rownames=FALSE, annotation_colors = mat_colors)
+pheatmap.type(log10(hm+0.0001),annRow=group,show_colnames=FALSE, annotation_colors = mat_colors, doTranspose =T)
 ```
 
-![](paradigm_example_Fig2_files/figure-gfm/Fig2d-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2d-1.png)<!-- -->
 
-We could also visualize the taxonomic characteristics of each cluster by
-plotting a heatmap of the top 20 most abundant species (based on shotgun
-metageonomic sequencing) in the MSKCC discovery cohort. First, we
-identified the top 20 most abundant species in the shotgun data.
+We could also visualize the taxonomic characteristics of each cluster by plotting a heatmap of the top 20 most abundant species (based on shotgun metageonomic sequencing) in the MSKCC discovery cohort. First, we identified the top 20 most abundant species in the shotgun data. 
 
-``` r
+
+```r
 col_choice_shotgun = names(sort(colMeans(tblshotgun_species_relative_abundance),decreasing=T)[1:20])
 
 tblshotgun_species_relative_abundance = data.frame(tblshotgun_species_relative_abundance)
@@ -300,9 +370,11 @@ top20_species_shotgun_tbl = tblsample_discovery %>%
               select(sampleid, all_of(col_choice_shotgun) ), by = "sampleid")
 ```
 
-We then visualized this information with a heatmap.
 
-``` r
+We then visualized this information with a heatmap. 
+
+
+```r
 mat_colors <- list(group = colors_asv_beta)
 names(mat_colors$group) <- c(1:10)
 
@@ -315,16 +387,15 @@ rownames(hm) = top20_species_shotgun_tbl$sampleid
 group = data.frame(group = top20_species_shotgun_tbl$cluster_assignment)
 rownames(group) = top20_species_shotgun_tbl$sampleid
 
-pheatmap.type(log10(hm+0.00001),annRow=group,show_rownames=FALSE, annotation_colors = mat_colors)
+pheatmap.type(log10(hm+0.0001),annRow=group,show_colnames=FALSE, annotation_colors = mat_colors, doTranspose =T)
 ```
 
-![](paradigm_example_Fig2_files/figure-gfm/Fig2e-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2e-1.png)<!-- -->
 
-Alpha-diversity of each sample (based on 16S sequencing data) are
-outlined in the ‘tblsample’ table. We could plot alpha-diversity of each
-sample per cluster in a boxplot.
+Alpha-diversity of each sample (based on 16S sequencing data) are outlined in the 'tblsample' table. We could plot alpha-diversity of each sample per cluster in a boxplot. 
 
-``` r
+
+```r
 ggplot(tblsample_discovery, aes(y = simpson_reciprocal, x = factor(cluster_assignment), fill = factor(cluster_assignment))) + 
   geom_boxplot() +
   theme(axis.text.x = element_blank()) +
@@ -335,12 +406,12 @@ ggplot(tblsample_discovery, aes(y = simpson_reciprocal, x = factor(cluster_assig
   geom_hline(yintercept = median(tblsample_discovery$simpson_reciprocal), linetype = 2) 
 ```
 
-![](paradigm_example_Fig2_files/figure-gfm/Fig2f-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2f-1.png)<!-- -->
 
-To examine cluster dynamics over time, we calculated cluster frequency
-in a weekly interval between day -28 and 27 relative to HCT.
+To examine cluster dynamics over time, we calculated cluster frequency in a weekly interval between day -28 and 27 relative to HCT. 
 
-``` r
+
+```r
 tblsample_discovery_time = tblsample_discovery %>% 
   filter(day_relative_to_hct %in% -28:27) %>% 
   mutate(day_relative_to_hct_f = factor(day_relative_to_hct, levels = c(-28:27) ))
@@ -362,9 +433,10 @@ rownames(relative_frequency_time_matrix) <- c("1", "2", "3", "4", "5", "6", "7",
 m2 <- melt(cbind(relative_frequency_time_matrix, ind = rownames(relative_frequency_time_matrix)), id.vars = c('ind'))
 ```
 
-We visualized cluster dynamics over time by a stacked barplot.
+We visualized cluster dynamics over time by a stacked barplot. 
 
-``` r
+
+```r
 ggplot(m2, aes(x = variable, y = value, fill = factor(ind))) + 
   geom_bar(stat = "identity") +
   ggtitle("Relative frequency k = 10") +
@@ -375,4 +447,4 @@ ggplot(m2, aes(x = variable, y = value, fill = factor(ind))) +
   theme(legend.position = "none", axis.text.x = element_text(angle=45,hjust=1))
 ```
 
-![](paradigm_example_Fig2_files/figure-gfm/Fig2g-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2g-1.png)<!-- -->
