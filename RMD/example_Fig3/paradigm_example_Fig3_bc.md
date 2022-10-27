@@ -679,7 +679,7 @@ out_self = pheatmap(self_coefficient_to_plot[c(1,2,ind_df),], col = colorRampPal
                     cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Self Transition")
 ```
 
-![](paradigm_example_Fig3_bc_files/figure-html/FigS3_self-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/3f72929276630d26495616e4ad520ec43fd9f69f/RMD/example_Fig3/figures/FigS3_self_manual_export.png)<!-- -->
 
 And cluster attractor transitions. 
 
@@ -690,7 +690,7 @@ out_attractor = pheatmap(attractor_coefficient_to_plot[c(1,2,ind_df),], col = co
                          cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Attractor Transition")    
 ```
 
-![](paradigm_example_Fig3_bc_files/figure-html/FigS3_attractor-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/3f72929276630d26495616e4ad520ec43fd9f69f/RMD/example_Fig3/figures/FigS3_attractor_manual_export.png)<!-- -->
 
 We trained the model and learned the associations between a drug exposure and a given cluster self and attractor transitions. A negative coefficient value indicates that a drug exposure is associated with decreased cluster self/attractor transition probability, and a positive coefficient value indicates that a drug exposure is associated with increased cluster self/attracotr transition probability.  
   
@@ -794,7 +794,7 @@ ggplot(data = response_score_feature_aggregate_to_plot,
 ## Coordinate system already present. Adding new coordinate system, which will replace the existing one.
 ```
 
-![](paradigm_example_Fig3_bc_files/figure-html/FigS4-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/3f72929276630d26495616e4ad520ec43fd9f69f/RMD/example_Fig3/figures/FigS4_response_score_manual_export.png)<!-- -->
 
 As a sanity check, we correlated the bacteria response scores for alpha-diversity and for Enterococcus relative abundance. We expected and observed a significant negative correlation, indicating that drug exposures which are associated with increased Enterococcus relative abundnace, are associated with decreased alpha-diversity, and vice-versa. In allo-HCT, Enterococcus expansion typically leads to a low-diversity state of Enterococcus domination and dysbiosis. 
 
@@ -814,5 +814,5 @@ ggplot(data = response_score_feature_aggregate,
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](paradigm_example_Fig3_bc_files/figure-html/Fig3d-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/1068daee45b20d6bdf489d179e88fd4fe9cb6bb4/RMD/example_Fig3/figures/Fig3d-1.png)<!-- -->
 
