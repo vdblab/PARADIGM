@@ -445,4 +445,4 @@ ggplot(data = genus_abundance_aggregate_duke, aes(x=rc_norm, y = log10(genus_abu
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![]([paradigm_example_Fig5_files/figure-html/Fig5c_Duke-1.png](https://github.com/ChiLNguyen/PARADIGM/blob/060c9074971ea8ff90d8dedb61d67d85e9aaed8f/RMD/example_Fig5/figures/Fig5c_Duke-1.png))<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/060c9074971ea8ff90d8dedb61d67d85e9aaed8f/RMD/example_Fig5/figures/Fig5c_Duke-1.png)<!-- -->
