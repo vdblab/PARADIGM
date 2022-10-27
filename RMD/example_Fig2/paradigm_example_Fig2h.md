@@ -4,7 +4,7 @@ author: "Chi L. Nguyen"
 date: "10/17/2022"
 output:
   html_document:
-    keep_md: no
+    keep_md: yes
 ---
 
 
