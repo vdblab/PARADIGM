@@ -4,7 +4,7 @@ author: "Chi L. Nguyen"
 date: "10/17/2022"
 output:
   html_document:
-    keep_md: yes
+    keep_md: no
 ---
 
 
@@ -194,7 +194,7 @@ legend(
   bty    = "n" )
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/0f0d8cfb826165bfb0e2474e4e670d802c80aac8/RMD/example_Fig2/figures/Fig2h_heat_map-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/0f0d8cfb826165bfb0e2474e4e670d802c80aac8/RMD/example_Fig2/figures/Fig2h_network_map-1.png)<!-- -->
 
 We could also visualize cluster transitions in a 10x10 heatmap. 
 
@@ -204,4 +204,4 @@ pheatmap((transition_matrix*100),cluster_rows= FALSE, cluster_cols = FALSE,
          display_numbers = round(transition_matrix,2), breaks = seq(0,100,by=1))
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/0f0d8cfb826165bfb0e2474e4e670d802c80aac8/RMD/example_Fig2/figures/Fig2h_network_map-1.png)<!-- -->
+![](https://github.com/ChiLNguyen/PARADIGM/blob/0f0d8cfb826165bfb0e2474e4e670d802c80aac8/RMD/example_Fig2/figures/Fig2h_heat_map-1.png)<!-- -->
