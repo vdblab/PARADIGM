@@ -25,18 +25,18 @@ Table details:
 
 ```{r load_data}
 
-tbldrugs = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tbldrugs_master_table_MSKCC_1198patients_day-14to14_102422.csv")
+tbldrugs = read.csv("../../data/21445161/tbldrugs_master_table_MSKCC_1198patients_day-14to14_102422.csv")
 head(tbldrugs)
 length(unique(tbldrugs$PatientID))
 range(tbldrugs$exposure_day_relative_to_hct)
 
-tblantibiotics_duke = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblantibiotics_master_table_Duke_142patients_day-14to14_102422.csv")
+tblantibiotics_duke = read.csv("../../data/21445161/tblantibiotics_master_table_Duke_142patients_day-14to14_102422.csv")
 head(tblantibiotics_duke)
 
-tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/21445161/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
 dim(tblsample)
 
-tblpatient = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblpatient_cohort_characteristics_master_table_deid_MSKCC_778_discovery_423_validation_142_Duke_102422.csv")
+tblpatient = read.csv("../../data/21445161/tblpatient_cohort_characteristics_master_table_deid_MSKCC_778_discovery_423_validation_142_Duke_102422.csv")
 table(tblpatient$set)
 head(tblpatient)
 
@@ -44,7 +44,7 @@ tblpatient_validation = tblpatient %>%
   filter(set == "validation") 
 length(unique(tblpatient_validation$PatientID))
 
-tblresponse_score = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblresponse_scores_4microbiome_features_2039samples_102422.csv")
+tblresponse_score = read.csv("../../data/21445176/tblresponse_scores_4microbiome_features_2039samples_102422.csv")
 head(tblresponse_score)
 
 ```

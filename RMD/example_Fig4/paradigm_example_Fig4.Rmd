@@ -20,9 +20,9 @@ StrainPhlAn (https://github.com/biobakery/MetaPhlAn/wiki/StrainPhlAn-4) were use
 
 ```{r load_data}
 
-strain_dynamics = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblstrain_dynamics.csv")
+strain_dynamics = read.csv("../../data/tblstrain_dynamics.csv")
 
-tblresponse_score = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblresponse_scores_4microbiome_features_2039samples_102422.csv")
+tblresponse_score = read.csv("../../data/21445176/tblresponse_scores_4microbiome_features_2039samples_102422.csv")
 
 ```
 

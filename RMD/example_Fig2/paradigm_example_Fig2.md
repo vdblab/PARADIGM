@@ -14,11 +14,10 @@ Cohort characteristics are outlined in 'tblsample' table; ASV counts and taxonom
 
 
 ```r
-tblcounts = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblcounts = read.csv("../../data/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/21445161/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
 
-tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
-
-tblshotgun = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblshotgun_MetaPhlAn_classification_filtered_1180samples_102422.csv")
+tblshotgun = read.csv("../../data/tblshotgun_MetaPhlAn_classification_filtered_1180samples_102422.csv")
 
 head(tblcounts)
 ```
@@ -186,7 +185,7 @@ ggplot(tblsample_discovery, aes(x=tsne1,y=tsne2,col=factor(dominant_genus))) +
   theme(legend.position = "none")
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/d249eaea648c8f8f83a481c0b51563391bd9d001/RMD/example_Fig2/figures/Fig2a-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2a-1.png)<!-- -->
 
 Taxonomic profiles (relative abundance) of shotgun sequencing data from MetaPhlAn 3.0are outlined in a separate table. Each row is a taxonomic classification, each column is a sample. Some samples with numeric names will have the letter "X" preceeding the numeric names, and the character "X" needs to be removed. 
 
@@ -303,7 +302,7 @@ ggplot(tblshotgun_plot_tsne , aes(x=tsne1_shotgun,y=tsne2_shotgun,col=factor(dom
   theme(legend.position = "none")
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/0f0d8cfb826165bfb0e2474e4e670d802c80aac8/RMD/example_Fig2/figures/Fig2b-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2b-1.png)<!-- -->
 
 We pre-defined kmeans cluster by applying kmeans() functions to the pairwise Bray-Curtis beta-diversity matrix for samples in the MSKCC discovery cohort. Kmeans cluster assignments are outlined in the 'tblsample' table. 
 
@@ -320,7 +319,7 @@ ggplot(tblsample_discovery, aes(x=tsne1,y=tsne2,col=factor(cluster_assignment)))
   theme(legend.position = "none")
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/0f0d8cfb826165bfb0e2474e4e670d802c80aac8/RMD/example_Fig2/figures/Fig2c-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2c-1.png)<!-- -->
 
 We then visualized the taxonomic characteristics of each cluster by plotting a heatmap of the top 20 most abundant genera (based on 16S sequencing data) in the MSKCC discovery cohort. First, we identified the top 20 most abundant genera and their relative abundance per sample. 
 
@@ -351,7 +350,7 @@ rownames(group) = top20_genus_tbl$oligos_id
 pheatmap.type(log10(hm+0.0001),annRow=group,show_colnames=FALSE, annotation_colors = mat_colors, doTranspose =T)
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/0f0d8cfb826165bfb0e2474e4e670d802c80aac8/RMD/example_Fig2/figures/Fig2d-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2d-1.png)<!-- -->
 
 We could also visualize the taxonomic characteristics of each cluster by plotting a heatmap of the top 20 most abundant species (based on shotgun metageonomic sequencing) in the MSKCC discovery cohort. First, we identified the top 20 most abundant species in the shotgun data. 
 
@@ -390,7 +389,7 @@ rownames(group) = top20_species_shotgun_tbl$sampleid
 pheatmap.type(log10(hm+0.0001),annRow=group,show_colnames=FALSE, annotation_colors = mat_colors, doTranspose =T)
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/0f0d8cfb826165bfb0e2474e4e670d802c80aac8/RMD/example_Fig2/figures/Fig2e-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2e-1.png)<!-- -->
 
 Alpha-diversity of each sample (based on 16S sequencing data) are outlined in the 'tblsample' table. We could plot alpha-diversity of each sample per cluster in a boxplot. 
 
@@ -406,7 +405,7 @@ ggplot(tblsample_discovery, aes(y = simpson_reciprocal, x = factor(cluster_assig
   geom_hline(yintercept = median(tblsample_discovery$simpson_reciprocal), linetype = 2) 
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/0f0d8cfb826165bfb0e2474e4e670d802c80aac8/RMD/example_Fig2/figures/Fig2f-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2f-1.png)<!-- -->
 
 To examine cluster dynamics over time, we calculated cluster frequency in a weekly interval between day -28 and 27 relative to HCT. 
 
@@ -447,4 +446,4 @@ ggplot(m2, aes(x = variable, y = value, fill = factor(ind))) +
   theme(legend.position = "none", axis.text.x = element_text(angle=45,hjust=1))
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/0f0d8cfb826165bfb0e2474e4e670d802c80aac8/RMD/example_Fig2/figures/Fig2g-1.png)<!-- -->
+![](paradigm_example_Fig2_files/figure-html/Fig2g-1.png)<!-- -->

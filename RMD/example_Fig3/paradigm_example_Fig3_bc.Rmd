@@ -10,7 +10,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, dev = c('png', 'postscript'))
 library(pheatmap)
-source("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Script/github_deposit/paradigm_drug_cluster_association_v6.R", echo=F)
+source("../../R/paradigm_drug_cluster_association_v6.R", echo=F)
 
 ```
 
@@ -25,22 +25,22 @@ Table details:
 
 ```{r load data}
 
-tbldaily = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tbldaily_sampling_PARADIGM_input_post_filter_2039samples_102422.csv")
+tbldaily = read.csv("../../data/tbldaily_sampling_PARADIGM_input_post_filter_2039samples_102422.csv")
 head(tbldaily)
 dim(tbldaily)
 length(unique(tbldaily$PatientID))
 
-tblpatient = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblpatient_cohort_characteristics_master_table_deid_MSKCC_778_discovery_423_validation_142_Duke_102422.csv")
+tblpatient = read.csv("../../data/21445161/tblpatient_cohort_characteristics_master_table_deid_MSKCC_778_discovery_423_validation_142_Duke_102422.csv")
 head(tblpatient)
 table(tblpatient$set)
 
-tbleuclidean_distance = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tbleuclidean_distance_10clusters_post_filter_7454samples_102422.csv")
+tbleuclidean_distance = read.csv("../../data/tbleuclidean_distance_10clusters_post_filter_7454samples_102422.csv")
 head(tbleuclidean_distance)
 
-tblcounts = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblcounts = read.csv("../../data/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
 head(tblcounts)
 
-tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/21445161/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
 head(tblsample)
 
 ```
@@ -91,7 +91,7 @@ To plot Fig. 3b and Fig.S3, we arranged drug exposures by drug class.
 self_coefficient_to_plot = t(self_coefficient_matrix)
 attractor_coefficient_to_plot = t(attractor_coefficient_matrix)
 
-tblgraph_drug_exposure_classification = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblgraph_drug_exposure_classification.csv") 
+tblgraph_drug_exposure_classification = read.csv("../../data/21445161/tblgraph_drug_exposure_classification.csv") 
 
 drug_group_annotation = tblgraph_drug_exposure_classification %>% select(group, ind)
 rownames(drug_group_annotation) = tblgraph_drug_exposure_classification$exposure_name

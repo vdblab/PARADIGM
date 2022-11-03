@@ -11,44 +11,44 @@ output:
 knitr::opts_chunk$set(echo = TRUE, dev = c('png', 'postscript'))
 library(tidyverse)
 library(ggpubr)
-source("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Script/github_deposit/paradigm_drug_cluster_association_v6.R", echo=F)
+source("../../R/paradigm_drug_cluster_association_v6.R", echo=F)
 ```
 
 Publicly available data from the Maier et al., 2018 Nature (DOI: 10.1038/nature25979) can be downloaded from:  
 https://figshare.com/articles/dataset/Extensive_impact_of_non-antibiotic_drugs_on_human_gut_bacteria/4813882  
+and moved to `data`
 Load *in vitro* data 
 
 ```{r load_invitro data}
-
-combined_pv = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Aug2021/combined_pv.csv")
-prestwick_atc = read_tsv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Aug2021/prestwick_atc.tsv")
-species_overview = read_tsv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Aug2021/species_overview.tsv")
+combined_pv = read_tsv("../../data/4813882/combined_pv.tsv")
+prestwick_atc = read_tsv("../../data/4813882/prestwick_atc.tsv")
+species_overview = read_tsv("../../data/4813882/species_overview.tsv")
 
 ```
 
 ```{r load_human_data}
 
-tblcounts = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblcounts = read.csv("../../data/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
 length(unique(tblcounts$oligos_id))
 length(unique(tblcounts$sampleid))
 
-tbleuclidean_distance = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tbleuclidean_distance_10clusters_post_filter_7454samples_102422.csv")
+tbleuclidean_distance = read.csv("../../data/tbleuclidean_distance_10clusters_post_filter_7454samples_102422.csv")
 
-tbldrugs = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tbldrugs_master_table_MSKCC_1198patients_day-14to14_102422.csv")
+tbldrugs = read.csv("../../data/21445161/tbldrugs_master_table_MSKCC_1198patients_day-14to14_102422.csv")
 length(unique(tbldrugs$PatientID))
 range(tbldrugs$exposure_day_relative_to_hct)
 
-tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/21445161/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
 tblsample_discovery = tblsample %>% 
   filter(set == "discovery")
 dim(tblsample_discovery)
 ```
 
 ```{r load_elastic_net_coefficient_matrix}
+# TODO read from previous script
+self_coefficient_matrix = read.csv("../../data/21445176/tblself_coefficient_matrix_2039samples_102422.csv")
 
-self_coefficient_matrix = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblself_coefficient_matrix_2039samples_102422.csv")
-
-attractor_coefficient_matrix = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblattractor_coefficient_matrix_2039samples_102422.csv")
+attractor_coefficient_matrix = read.csv("../../data/21445176/tblattractor_coefficient_matrix_2039samples_102422.csv")
 
 ```
 

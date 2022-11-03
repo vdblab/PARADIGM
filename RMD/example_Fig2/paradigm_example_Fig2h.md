@@ -13,7 +13,7 @@ Cohort characteristics are outlined in 'tblsample' table.
 
 
 ```r
-tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/21445161/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
 
 table(tblsample$set)
 ```
@@ -194,7 +194,7 @@ legend(
   bty    = "n" )
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/0f0d8cfb826165bfb0e2474e4e670d802c80aac8/RMD/example_Fig2/figures/Fig2h_network_map-1.png)<!-- -->
+![](paradigm_example_Fig2h_files/figure-html/Fig2h_network_map-1.png)<!-- -->
 
 We could also visualize cluster transitions in a 10x10 heatmap. 
 
@@ -204,4 +204,4 @@ pheatmap((transition_matrix*100),cluster_rows= FALSE, cluster_cols = FALSE,
          display_numbers = round(transition_matrix,2), breaks = seq(0,100,by=1))
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/0f0d8cfb826165bfb0e2474e4e670d802c80aac8/RMD/example_Fig2/figures/Fig2h_heat_map-1.png)<!-- -->
+![](paradigm_example_Fig2h_files/figure-html/Fig2h_heat_map-1.png)<!-- -->
