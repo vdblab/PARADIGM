@@ -1,7 +1,7 @@
 ---
 title: "PARADIGM example: Figure 2"
 author: "Chi L. Nguyen"
-date: "10/17/2022"
+date: "2022-11-28"
 output:
   html_document:
     keep_md: yes
@@ -14,10 +14,11 @@ Cohort characteristics are outlined in 'tblsample' table; ASV counts and taxonom
 
 
 ```r
-tblcounts = read.csv("../../data/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
-tblsample = read.csv("../../data/21445161/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblcounts = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
 
-tblshotgun = read.csv("../../data/tblshotgun_MetaPhlAn_classification_filtered_1180samples_102422.csv")
+tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+
+tblshotgun = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblshotgun_MetaPhlAn_classification_filtered_1180samples_102422.csv")
 
 head(tblcounts)
 ```
@@ -270,6 +271,14 @@ tblshotgun_species_relative_abundance[1:6, 1:6]
 ## FMT.0093Z                        0                       0
 ```
 
+```r
+dim(tblshotgun_species_relative_abundance)
+```
+
+```
+## [1] 980 777
+```
+
 We then identified the most abundant species per shotgun sample. 
 
 
@@ -341,13 +350,16 @@ mat_colors <- list(group = colors_asv_beta)
 names(mat_colors$group) <- c(1:10)
 
 hm = data.frame(top20_genus_tbl[,-c(1:2)])
+hm = t(hm)
 hm = apply(hm, c(1,2), as.numeric)
-rownames(hm) = top20_genus_tbl$oligos_id
+colnames(hm) = top20_genus_tbl$oligos_id
 
 group = data.frame(group = top20_genus_tbl$cluster_assignment)
 rownames(group) = top20_genus_tbl$oligos_id
 
-pheatmap.type(log10(hm+0.0001),annRow=group,show_colnames=FALSE, annotation_colors = mat_colors, doTranspose =T)
+pheatmap(log10(hm+0.0001),annotation_col = group, annotation_colors = mat_colors, 
+         show_colnames=FALSE, annotation_legend = F,
+         cluster_cols = F, cluster_rows = T)
 ```
 
 ![](paradigm_example_Fig2_files/figure-html/Fig2d-1.png)<!-- -->
@@ -379,14 +391,17 @@ names(mat_colors$group) <- c(1:10)
 
 hm = data.frame(top20_species_shotgun_tbl)
 hm = hm[,-c(1,2)]
+hm = t(hm)
 hm = apply(hm, c(1,2), as.numeric)
-colnames(hm) = colnames(top20_species_shotgun_tbl)[-c(1,2)]
-rownames(hm) = top20_species_shotgun_tbl$sampleid
+rownames(hm) = colnames(top20_species_shotgun_tbl)[-c(1,2)]
+colnames(hm) = top20_species_shotgun_tbl$sampleid
 
 group = data.frame(group = top20_species_shotgun_tbl$cluster_assignment)
 rownames(group) = top20_species_shotgun_tbl$sampleid
 
-pheatmap.type(log10(hm+0.0001),annRow=group,show_colnames=FALSE, annotation_colors = mat_colors, doTranspose =T)
+pheatmap(log10(hm+0.0001),annotation_col = group, annotation_colors = mat_colors, 
+         show_colnames=FALSE, annotation_legend = F,
+         cluster_cols = F, cluster_rows = T)
 ```
 
 ![](paradigm_example_Fig2_files/figure-html/Fig2e-1.png)<!-- -->
