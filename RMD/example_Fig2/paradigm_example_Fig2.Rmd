@@ -1,7 +1,7 @@
 ---
 title: "PARADIGM example: Figure 2"
 author: "Chi L. Nguyen"
-date: "10/17/2022"
+date: "`r Sys.Date()`"
 output:
   html_document:
     keep_md: yes
@@ -9,9 +9,9 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, dev = c('png', 'postscript'))
+
 library(tidyverse)
 library(pheatmap)
-library(Pigengene)
 library(reshape2)
 
 ```
@@ -21,10 +21,11 @@ Cohort characteristics are outlined in 'tblsample' table; ASV counts and taxonom
 
 ```{r load_data}
 
-tblcounts = read.csv("../../data/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
-tblsample = read.csv("../../data/21445161/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblcounts = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
 
-tblshotgun = read.csv("../../data/tblshotgun_MetaPhlAn_classification_filtered_1180samples_102422.csv")
+tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+
+tblshotgun = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblshotgun_MetaPhlAn_classification_filtered_1180samples_102422.csv")
 
 head(tblcounts)
 head(tblsample)
@@ -46,7 +47,6 @@ tblsample_discovery = tblsample %>%
 
 length(unique(tblsample_discovery$sampleid))
 length(unique(tblsample_discovery$oligos_id))
-
 
 ```
 
@@ -110,6 +110,7 @@ shotgun_discovery_ind = which(rownames(tblshotgun_species_relative_abundance) %i
 tblshotgun_species_relative_abundance = tblshotgun_species_relative_abundance[shotgun_discovery_ind,]
 
 tblshotgun_species_relative_abundance[1:6, 1:6]
+dim(tblshotgun_species_relative_abundance)
 ```
 
 We then identified the most abundant species per shotgun sample. 
@@ -183,13 +184,16 @@ mat_colors <- list(group = colors_asv_beta)
 names(mat_colors$group) <- c(1:10)
 
 hm = data.frame(top20_genus_tbl[,-c(1:2)])
+hm = t(hm)
 hm = apply(hm, c(1,2), as.numeric)
-rownames(hm) = top20_genus_tbl$oligos_id
+colnames(hm) = top20_genus_tbl$oligos_id
 
 group = data.frame(group = top20_genus_tbl$cluster_assignment)
 rownames(group) = top20_genus_tbl$oligos_id
 
-pheatmap.type(log10(hm+0.0001),annRow=group,show_colnames=FALSE, annotation_colors = mat_colors, doTranspose =T)
+pheatmap(log10(hm+0.0001),annotation_col = group, annotation_colors = mat_colors, 
+         show_colnames=FALSE, annotation_legend = F,
+         cluster_cols = F, cluster_rows = T)
 
 ```
 
@@ -221,15 +225,17 @@ names(mat_colors$group) <- c(1:10)
 
 hm = data.frame(top20_species_shotgun_tbl)
 hm = hm[,-c(1,2)]
+hm = t(hm)
 hm = apply(hm, c(1,2), as.numeric)
-colnames(hm) = colnames(top20_species_shotgun_tbl)[-c(1,2)]
-rownames(hm) = top20_species_shotgun_tbl$sampleid
+rownames(hm) = colnames(top20_species_shotgun_tbl)[-c(1,2)]
+colnames(hm) = top20_species_shotgun_tbl$sampleid
 
 group = data.frame(group = top20_species_shotgun_tbl$cluster_assignment)
 rownames(group) = top20_species_shotgun_tbl$sampleid
 
-pheatmap.type(log10(hm+0.0001),annRow=group,show_colnames=FALSE, annotation_colors = mat_colors, doTranspose =T)
-
+pheatmap(log10(hm+0.0001),annotation_col = group, annotation_colors = mat_colors, 
+         show_colnames=FALSE, annotation_legend = F,
+         cluster_cols = F, cluster_rows = T)
 ```
 
 Alpha-diversity of each sample (based on 16S sequencing data) are outlined in the 'tblsample' table. We could plot alpha-diversity of each sample per cluster in a boxplot. 
