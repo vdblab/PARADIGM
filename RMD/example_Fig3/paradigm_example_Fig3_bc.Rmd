@@ -1,7 +1,7 @@
 ---
 title: 'PARADIGM example: Figure 3b-c'
 author: "Chi L. Nguyen"
-date: "10/17/2022"
+date: "`r Sys.Date()`"
 output:
   html_document:
     keep_md: yes
@@ -25,22 +25,22 @@ Table details:
 
 ```{r load data}
 
-tbldaily = read.csv("../../data/tbldaily_sampling_PARADIGM_input_post_filter_2039samples_102422.csv")
+tbldaily = read.csv("../../data/tbldaily_sampling_PARADIGM.csv")
 head(tbldaily)
 dim(tbldaily)
 length(unique(tbldaily$PatientID))
 
-tblpatient = read.csv("../../data/21445161/tblpatient_cohort_characteristics_master_table_deid_MSKCC_778_discovery_423_validation_142_Duke_102422.csv")
+tblpatient = read.csv("../../data/tblpatient.csv")
 head(tblpatient)
 table(tblpatient$set)
 
-tbleuclidean_distance = read.csv("../../data/tbleuclidean_distance_10clusters_post_filter_7454samples_102422.csv")
+tbleuclidean_distance = read.csv("../../data/tbleuclidean_distance_10clusters_kmeans.csv")
 head(tbleuclidean_distance)
 
-tblcounts = read.csv("../../data/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblcounts = read.csv("../../data/tblcounts.csv")
 head(tblcounts)
 
-tblsample = read.csv("../../data/21445161/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/tblsample.csv")
 head(tblsample)
 
 ```
@@ -91,7 +91,7 @@ To plot Fig. 3b and Fig.S3, we arranged drug exposures by drug class.
 self_coefficient_to_plot = t(self_coefficient_matrix)
 attractor_coefficient_to_plot = t(attractor_coefficient_matrix)
 
-tblgraph_drug_exposure_classification = read.csv("../../data/21445161/tblgraph_drug_exposure_classification.csv") 
+tblgraph_drug_exposure_classification = read.csv("../../data/tblgraph_drug_exposure_classification.csv") 
 
 drug_group_annotation = tblgraph_drug_exposure_classification %>% select(group, ind)
 rownames(drug_group_annotation) = tblgraph_drug_exposure_classification$exposure_name
@@ -108,7 +108,9 @@ names(set$group) = unique(tblgraph_drug_exposure_classification$group)
 
 ind_df = match(rownames(drug_group_annotation), rownames(self_coefficient_to_plot)) 
 
-out_self = pheatmap(self_coefficient_to_plot[c(1,2,ind_df),], col = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.3)(150), 
+self_coefficient_to_plot = self_coefficient_to_plot[c(1,2,ind_df),]
+
+out_self = pheatmap(self_coefficient_to_plot, col = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.3)(150), 
                     annotation_row = drug_group_annotation, annotation_colors = set, 
                     cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Self Transition")
 
@@ -118,9 +120,35 @@ And cluster attractor transitions.
 
 ```{r FigS3_attractor}
 
-out_attractor = pheatmap(attractor_coefficient_to_plot[c(1,2,ind_df),], col = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.3)(150), 
+attractor_coefficient_to_plot = attractor_coefficient_to_plot[c(1,2,ind_df),]
+
+out_attractor = pheatmap(attractor_coefficient_to_plot, col = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.3)(150), 
                          annotation_row = drug_group_annotation, annotation_colors = set,
                          cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Attractor Transition")    
+
+```
+
+Figures 3b-c presented a portion of this data, for the list of 20 drugs we wanted to highlight in our main text, due to their differential effects on bacteria genera and alpha-diversity. 
+
+```{r Fig3b_self}
+
+main20_names = c("metronidazole", "ursodiol", "diphenoxylate_atropine", "polyethylene_glycol", "fentanyl", "methotrexate", "cyclosporine", "antithymocyte_globulin_rabbit", "hydralazine", "gabapentin", "metoprolol", "docusate_sodium", "sulfamethoxazole_trimethoprim", "hydroxyzine", "levetiracetam", "estradiol", "palifermin", "meropenem", "zolpidem", "famotidine")
+
+main20_ind = which(rownames(self_coefficient_to_plot) %in%  main20_names)
+  
+out_self_main_text = pheatmap(self_coefficient_to_plot[main20_ind,], col = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.3)(150), 
+                    annotation_row = drug_group_annotation, annotation_colors = set, 
+                    cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Self Transition")
+
+```
+
+```{r Fig3b_attractor}
+
+main20_ind = which(rownames(attractor_coefficient_to_plot) %in%  main20_names)
+  
+out_attractor_main_text = pheatmap(attractor_coefficient_to_plot[main20_ind,], col = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.3)(150), 
+                    annotation_row = drug_group_annotation, annotation_colors = set, 
+                    cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Attractor Transition")
 
 ```
 
@@ -194,6 +222,28 @@ response_score_feature_aggregate_to_plot = response_score_feature_aggregate_to_p
                                TRUE ~ "+"))
 
 ggplot(data = response_score_feature_aggregate_to_plot, 
+       aes(x=variable, y=factor(exposure_name, levels = rev(drug_level)), fill=value )) +
+  geom_tile(stat = "identity") + theme_classic() + 
+  theme(plot.title=element_text(size=16,face="bold"),
+        axis.title.y=element_blank(),
+        axis.ticks.y=element_blank()) +
+  geom_text(aes(label = sign_coef), color = "black", size = 4) +
+  coord_flip() + coord_fixed() +
+  scale_fill_gradientn(colours = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.5)(30), 
+                       limits = c(-3, 5), breaks = seq(-2,4,by=2)) + 
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), axis.title.y = element_blank(), axis.title.x = element_blank())
+
+```
+
+We could plot Fig 3c for a subset of 20 highlighted medications.
+
+```{r Fig3c}
+
+response_score_feature_aggregate_to_plot_main20 = response_score_feature_aggregate_to_plot %>% 
+  filter(exposure_name %in% main20_names)
+
+ggplot(data = response_score_feature_aggregate_to_plot_main20, 
        aes(x=variable, y=factor(exposure_name, levels = rev(drug_level)), fill=value )) +
   geom_tile(stat = "identity") + theme_classic() + 
   theme(plot.title=element_text(size=16,face="bold"),

@@ -1,7 +1,7 @@
 ---
 title: 'PARADIGM example: Figure 3e-f (comparison with in vitro study)'
 author: "Chi L. Nguyen"
-date: "10/20/2022"
+date: "2022-12-01"
 output:
   html_document:
     keep_md: yes
@@ -11,12 +11,33 @@ output:
 
 Publicly available data from the Maier et al., 2018 Nature (DOI: 10.1038/nature25979) can be downloaded from:  
 https://figshare.com/articles/dataset/Extensive_impact_of_non-antibiotic_drugs_on_human_gut_bacteria/4813882  
+
+Three data frames necessary for this analysis are:   
+1. "combined_pv.tsv" (9960175)   
+2. "prestwick_atc.tsv (7970461)   
+3. "species_overview.tsv (7970428)  
+
 Load *in vitro* data 
 
 
 ```r
-combined_pv = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Aug2021/combined_pv.csv")
-prestwick_atc = read_tsv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Aug2021/prestwick_atc.tsv")
+combined_pv = read_tsv("https://ndownloader.figshare.com/files/9960175")
+```
+
+```
+## Rows: 47825 Columns: 13
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: "\t"
+## chr (4): NT_code, prestwick_ID, CID_flat, target_species
+## dbl (5): pv_comb, AUC, AUCsd, n_repl, pv_comb_fdr_BH
+## lgl (4): fine, veterinary, human_use, hit
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+```
+
+```r
+prestwick_atc = read_tsv("https://ndownloader.figshare.com/files/7970461")
 ```
 
 ```
@@ -31,7 +52,7 @@ prestwick_atc = read_tsv("~/Desktop/Backup from server /backup_Oct2020/First rot
 ```
 
 ```r
-species_overview = read_tsv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Aug2021/species_overview.tsv")
+species_overview = read_tsv("https://ndownloader.figshare.com/files/7970428")
 ```
 
 ```
@@ -48,7 +69,7 @@ species_overview = read_tsv("~/Desktop/Backup from server /backup_Oct2020/First 
 
 
 ```r
-tblcounts = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblcounts = read.csv("../../data/tblcounts.csv")
 length(unique(tblcounts$oligos_id))
 ```
 
@@ -65,9 +86,9 @@ length(unique(tblcounts$sampleid))
 ```
 
 ```r
-tbleuclidean_distance = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tbleuclidean_distance_10clusters_post_filter_7454samples_102422.csv")
+tbleuclidean_distance = read.csv("../../data/tbleuclidean_distance_10clusters_kmeans.csv")
 
-tbldrugs = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tbldrugs_master_table_MSKCC_1198patients_day-14to14_102422.csv")
+tbldrugs = read.csv("../../data/tbldrugs_MSKCC.csv")
 length(unique(tbldrugs$PatientID))
 ```
 
@@ -84,7 +105,7 @@ range(tbldrugs$exposure_day_relative_to_hct)
 ```
 
 ```r
-tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/tblsample.csv")
 tblsample_discovery = tblsample %>% 
   filter(set == "discovery")
 dim(tblsample_discovery)
@@ -96,9 +117,9 @@ dim(tblsample_discovery)
 
 
 ```r
-self_coefficient_matrix = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblself_coefficient_matrix_2039samples_102422.csv")
+self_coefficient_matrix = read.csv("../../data/tblself_coefficient_matrix_PARADIGM.csv")
 
-attractor_coefficient_matrix = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblattractor_coefficient_matrix_2039samples_102422.csv")
+attractor_coefficient_matrix = read.csv("../../data/tblattractor_coefficient_matrix_PARADIGM.csv")
 ```
 
 We need to merge the tables together to obtain full drug names and species names, and match with the drug names in our *in silico* study. 
@@ -305,7 +326,7 @@ ggplot(response_score_invivo_comparison_to_plot, aes(y = AUC, x = response_score
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/63abad23455e69b9eab0943cd74fac6fe119603d/RMD/example_Fig3/figures/Fig3e-1.png)<!-- -->
+![](paradigm_example_Fig3_ef_files/figure-html/Fig3e-1.png)<!-- -->
 
 We observed a potential enrichment of significant *in vitro* hits (significant anti-bacteria activity of a given drug against a given species) in the lower left quadrant (with negative bacteria response scores), indicating that these species-drug interactions are also predicted to be inhibitory in this study. We can perform statistical test to validate this observation. 
 
@@ -356,7 +377,7 @@ ggplot(response_score_invivo_comparison_to_plot,
   xlab("In vitro inhibition")
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/63abad23455e69b9eab0943cd74fac6fe119603d/RMD/example_Fig3/figures/Fig3f-1.png)<!-- -->
+![](paradigm_example_Fig3_ef_files/figure-html/Fig3f-1.png)<!-- -->
 
 We could perform T-test comparing the response scores between *in vitro* hits and non-hits to zero. The response scores for *in vitro* hits are significantly different from 0 and lower than zero, indicating inhibitory associations in this human dataset. 
 

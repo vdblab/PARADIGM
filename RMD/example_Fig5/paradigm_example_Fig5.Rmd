@@ -1,7 +1,7 @@
 ---
 title: 'PARADIGM example: Figure 5'
 author: "Chi L. Nguyen"
-date: "10/21/2022"
+date: "`r Sys.Date()`"
 output:
   html_document:
     keep_md: yes
@@ -15,7 +15,6 @@ library(ggpubr)
 '%notin%' = Negate('%in%')
 ```
 
-
 Table details:  
 'tbldrugs' List of drug exposures and date of exposures for the entire MSKCC patient cohort (beween day -14 to 14 relative to HCT).  
 'tblantibiotics_duke' List of antibiotics and date of exposures for the Duke patient cohort (between day -14 to 14 relative to HCT).  
@@ -25,18 +24,18 @@ Table details:
 
 ```{r load_data}
 
-tbldrugs = read.csv("../../data/21445161/tbldrugs_master_table_MSKCC_1198patients_day-14to14_102422.csv")
+tbldrugs = read.csv("../../data/tbldrugs_MSKCC.csv")
 head(tbldrugs)
 length(unique(tbldrugs$PatientID))
 range(tbldrugs$exposure_day_relative_to_hct)
 
-tblantibiotics_duke = read.csv("../../data/21445161/tblantibiotics_master_table_Duke_142patients_day-14to14_102422.csv")
+tblantibiotics_duke = read.csv("../../data/tblantibiotics_Duke.csv")
 head(tblantibiotics_duke)
 
-tblsample = read.csv("../../data/21445161/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/tblsample.csv")
 dim(tblsample)
 
-tblpatient = read.csv("../../data/21445161/tblpatient_cohort_characteristics_master_table_deid_MSKCC_778_discovery_423_validation_142_Duke_102422.csv")
+tblpatient = read.csv("../../data/tblpatient.csv")
 table(tblpatient$set)
 head(tblpatient)
 
@@ -44,7 +43,7 @@ tblpatient_validation = tblpatient %>%
   filter(set == "validation") 
 length(unique(tblpatient_validation$PatientID))
 
-tblresponse_score = read.csv("../../data/21445176/tblresponse_scores_4microbiome_features_2039samples_102422.csv")
+tblresponse_score = read.csv("../../data/tblresponse_scores_4features_PARADIGM.csv")
 head(tblresponse_score)
 
 ```

@@ -1,12 +1,11 @@
 ---
 title: 'PARADIGM example: Figure 5'
 author: "Chi L. Nguyen"
-date: "10/21/2022"
+date: "2022-12-01"
 output:
   html_document:
     keep_md: yes
 ---
-
 
 
 
@@ -19,7 +18,7 @@ Table details:
 
 
 ```r
-tbldrugs = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tbldrugs_master_table_MSKCC_1198patients_day-14to14_102422.csv")
+tbldrugs = read.csv("../../data/tbldrugs_MSKCC.csv")
 head(tbldrugs)
 ```
 
@@ -50,7 +49,7 @@ range(tbldrugs$exposure_day_relative_to_hct)
 ```
 
 ```r
-tblantibiotics_duke = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblantibiotics_master_table_Duke_142patients_day-14to14_102422.csv")
+tblantibiotics_duke = read.csv("../../data/tblantibiotics_Duke.csv")
 head(tblantibiotics_duke)
 ```
 
@@ -72,7 +71,7 @@ head(tblantibiotics_duke)
 ```
 
 ```r
-tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/tblsample.csv")
 dim(tblsample)
 ```
 
@@ -81,7 +80,7 @@ dim(tblsample)
 ```
 
 ```r
-tblpatient = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblpatient_cohort_characteristics_master_table_deid_MSKCC_778_discovery_423_validation_142_Duke_102422.csv")
+tblpatient = read.csv("../../data/tblpatient.csv")
 table(tblpatient$set)
 ```
 
@@ -104,12 +103,12 @@ head(tblpatient)
 ## 5      1010   M Reduced Intensity      PBSC unmodified            AML  1
 ## 6       799   M Reduced Intensity      PBSC unmodified         Others  4
 ##   age_range institution        set
-## 1      >=65       MSKCC validation
-## 2      >=65       MSKCC  discovery
-## 3      >=65       MSKCC validation
-## 4      >=65       MSKCC  discovery
-## 5      >=65       MSKCC validation
-## 6      >=65       MSKCC validation
+## 1     45-65       MSKCC validation
+## 2       >65       MSKCC  discovery
+## 3       >65       MSKCC validation
+## 4     45-65       MSKCC  discovery
+## 5       >65       MSKCC validation
+## 6     45-65       MSKCC validation
 ```
 
 ```r
@@ -123,7 +122,7 @@ length(unique(tblpatient_validation$PatientID))
 ```
 
 ```r
-tblresponse_score = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblresponse_scores_4microbiome_features_2039samples_102422.csv")
+tblresponse_score = read.csv("../../data/tblresponse_scores_4features_PARADIGM.csv")
 head(tblresponse_score)
 ```
 
@@ -192,7 +191,7 @@ gghistogram(data = patient_level_response_score_Enterococcus, x = "rc_norm") +
 ## `bins`.
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/060c9074971ea8ff90d8dedb61d67d85e9aaed8f/RMD/example_Fig5/figures/Fig5b-1.png)<!-- -->
+![](paradigm_example_Fig5_files/figure-html/Fig5b-1.png)<!-- -->
 
 Let's explore whether *Enterococcus*-specific patient response scores (based solely on drug exposures between day -14 to 14 relative to HCT) are predictive of future microbiome trajectories (based on stool samples collected between day 14 to 45 relative to HCT). 
 
@@ -220,7 +219,7 @@ ggplot(data = genus_abundance_correlation_Enterococcus, aes(x=rc_norm, y = log10
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/060c9074971ea8ff90d8dedb61d67d85e9aaed8f/RMD/example_Fig5/figures/genus_abundance_prediction_Enterococcus_example-1.png)<!-- -->
+![](paradigm_example_Fig5_files/figure-html/genus_abundance_prediction_Enterococcus_example-1.png)<!-- -->
 
 To reproduce Fig 5c, we looped the script through all four features of interest. 
 
@@ -331,7 +330,7 @@ ggplot(data = genus_abundance_aggregate, aes(x=rc_norm, y = log10(genus_abundanc
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/060c9074971ea8ff90d8dedb61d67d85e9aaed8f/RMD/example_Fig5/figures/Fig5c_MSKCC-1.png)<!-- -->
+![](paradigm_example_Fig5_files/figure-html/Fig5c_MSKCC-1.png)<!-- -->
 
 Similarly, we could calculate the patient response scores for the Duke validation cohort. For this cohort, we only evaluated antibiotics exposures. 
 
@@ -445,4 +444,4 @@ ggplot(data = genus_abundance_aggregate_duke, aes(x=rc_norm, y = log10(genus_abu
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/060c9074971ea8ff90d8dedb61d67d85e9aaed8f/RMD/example_Fig5/figures/Fig5c_Duke-1.png)<!-- -->
+![](paradigm_example_Fig5_files/figure-html/Fig5c_Duke-1.png)<!-- -->

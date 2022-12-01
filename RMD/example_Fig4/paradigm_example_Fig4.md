@@ -1,7 +1,7 @@
 ---
 title: 'PARADIGM example: Fig4'
 author: "Chi L. Nguyen"
-date: "10/28/2022"
+date: "2022-12-01"
 output:
   html_document:
     keep_md: yes
@@ -13,9 +13,9 @@ StrainPhlAn (https://github.com/biobakery/MetaPhlAn/wiki/StrainPhlAn-4) were use
 
 
 ```r
-strain_dynamics = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblstrain_dynamics.csv")
+strain_dynamics = read.csv("../../data/tblstrain_dynamics.csv")
 
-tblresponse_score = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblresponse_scores_4microbiome_features_2039samples_102422.csv")
+tblresponse_score = read.csv("../../data/tblresponse_scores_4features_PARADIGM.csv")
 ```
 
 We observed the strain-level divergence over time of sample collection. 
@@ -44,7 +44,7 @@ ggplot(data = strain_dynamics, aes(x = day.x, y = log10(phylo_dist),
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](https://github.com/vdblab/PARADIGM/blob/540fc16ef7c5ff808d52f6a25d32d03ca37746f2/RMD/example_Fig4/figures/Fig4a_top-1.png)<!-- -->
+![](paradigm_example_Fig4_files/figure-html/Fig4a_top-1.png)<!-- -->
 
 We could also investigate strain-level divergence as a function of species relative abundance. 
 
@@ -66,7 +66,7 @@ ggplot(data = strain_dynamics, aes(x = log10(species + 0.0001), y = log10(phylo_
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](https://github.com/vdblab/PARADIGM/blob/540fc16ef7c5ff808d52f6a25d32d03ca37746f2/RMD/example_Fig4/figures/Fig4a_bottom-1.png)<!-- -->
+![](paradigm_example_Fig4_files/figure-html/Fig4a_bottom-1.png)<!-- -->
 
 *Enterococcus faecium* is a species of particular interest for further investigation of the associations drug exposures and strain evolution and divergence, due to the association between *E. faecium* and important allo-HCT outcomes such as infection and graft-versus-host disease. We compared the phylogenetic distance between subsequently collected samples, for sample pairs under antibiotics exposures and sample pairs not under antibiotics exposures. 
 
@@ -127,7 +127,7 @@ ggplot(data = strain_dynamics_efaecium, aes(x = factor(abx_exposed_yn, level = c
   theme(legend.position = "none")
 ```
 
-![](https://github.com/vdblab/PARADIGM/blob/540fc16ef7c5ff808d52f6a25d32d03ca37746f2/RMD/example_Fig4/figures/Fig4b-1.png)<!-- -->
+![](paradigm_example_Fig4_files/figure-html/Fig4b-1.png)<!-- -->
 
 ```r
 ggplot(data = strain_dynamics_efaecium, aes(x = factor(nonabx_exposed_yn, level = c("Not exposed", "Exposed")), 
@@ -143,4 +143,4 @@ ggplot(data = strain_dynamics_efaecium, aes(x = factor(nonabx_exposed_yn, level 
   theme(legend.position = "none")
 ```
 
-![](https://github.com/vdblab/PARADIGM/blob/540fc16ef7c5ff808d52f6a25d32d03ca37746f2/RMD/example_Fig4/figures/Fig4b-2.png)<!-- -->
+![](paradigm_example_Fig4_files/figure-html/Fig4b-2.png)<!-- -->

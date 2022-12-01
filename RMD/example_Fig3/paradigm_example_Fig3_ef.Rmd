@@ -1,7 +1,7 @@
 ---
 title: 'PARADIGM example: Figure 3e-f (comparison with in vitro study)'
 author: "Chi L. Nguyen"
-date: "10/20/2022"
+date: "`r Sys.Date()`"
 output:
   html_document:
     keep_md: yes
@@ -11,44 +11,51 @@ output:
 knitr::opts_chunk$set(echo = TRUE, dev = c('png', 'postscript'))
 library(tidyverse)
 library(ggpubr)
-source("../../R/paradigm_drug_cluster_association_v6.R", echo=F)
+library(rfigshare)
+source("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Script/github_deposit/paradigm_drug_cluster_association_v6.R", echo=F)
 ```
 
 Publicly available data from the Maier et al., 2018 Nature (DOI: 10.1038/nature25979) can be downloaded from:  
 https://figshare.com/articles/dataset/Extensive_impact_of_non-antibiotic_drugs_on_human_gut_bacteria/4813882  
-and moved to `data`
+
+Three data frames necessary for this analysis are:   
+1. "combined_pv.tsv" (9960175)   
+2. "prestwick_atc.tsv (7970461)   
+3. "species_overview.tsv (7970428)  
+
 Load *in vitro* data 
 
-```{r load_invitro data}
-combined_pv = read_tsv("../../data/4813882/combined_pv.tsv")
-prestwick_atc = read_tsv("../../data/4813882/prestwick_atc.tsv")
-species_overview = read_tsv("../../data/4813882/species_overview.tsv")
+```{r load_in_vitro_data}
+
+combined_pv = read_tsv("https://ndownloader.figshare.com/files/9960175")
+prestwick_atc = read_tsv("https://ndownloader.figshare.com/files/7970461")
+species_overview = read_tsv("https://ndownloader.figshare.com/files/7970428")
 
 ```
 
 ```{r load_human_data}
 
-tblcounts = read.csv("../../data/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblcounts = read.csv("../../data/tblcounts.csv")
 length(unique(tblcounts$oligos_id))
 length(unique(tblcounts$sampleid))
 
-tbleuclidean_distance = read.csv("../../data/tbleuclidean_distance_10clusters_post_filter_7454samples_102422.csv")
+tbleuclidean_distance = read.csv("../../data/tbleuclidean_distance_10clusters_kmeans.csv")
 
-tbldrugs = read.csv("../../data/21445161/tbldrugs_master_table_MSKCC_1198patients_day-14to14_102422.csv")
+tbldrugs = read.csv("../../data/tbldrugs_MSKCC.csv")
 length(unique(tbldrugs$PatientID))
 range(tbldrugs$exposure_day_relative_to_hct)
 
-tblsample = read.csv("../../data/21445161/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/tblsample.csv")
 tblsample_discovery = tblsample %>% 
   filter(set == "discovery")
 dim(tblsample_discovery)
 ```
 
 ```{r load_elastic_net_coefficient_matrix}
-# TODO read from previous script
-self_coefficient_matrix = read.csv("../../data/21445176/tblself_coefficient_matrix_2039samples_102422.csv")
 
-attractor_coefficient_matrix = read.csv("../../data/21445176/tblattractor_coefficient_matrix_2039samples_102422.csv")
+self_coefficient_matrix = read.csv("../../data/tblself_coefficient_matrix_PARADIGM.csv")
+
+attractor_coefficient_matrix = read.csv("../../data/tblattractor_coefficient_matrix_PARADIGM.csv")
 
 ```
 

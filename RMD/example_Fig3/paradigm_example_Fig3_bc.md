@@ -1,7 +1,7 @@
 ---
 title: 'PARADIGM example: Figure 3b-c'
 author: "Chi L. Nguyen"
-date: "10/17/2022"
+date: "2022-12-01"
 output:
   html_document:
     keep_md: yes
@@ -20,7 +20,7 @@ Table details:
 
 
 ```r
-tbldaily = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tbldaily_sampling_PARADIGM_input_post_filter_2039samples_102422.csv")
+tbldaily = read.csv("../../data/tbldaily_sampling_PARADIGM.csv")
 head(tbldaily)
 ```
 
@@ -135,7 +135,7 @@ length(unique(tbldaily$PatientID))
 ```
 
 ```r
-tblpatient = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblpatient_cohort_characteristics_master_table_deid_MSKCC_778_discovery_423_validation_142_Duke_102422.csv")
+tblpatient = read.csv("../../data/tblpatient.csv")
 head(tblpatient)
 ```
 
@@ -148,12 +148,12 @@ head(tblpatient)
 ## 5      1010   M Reduced Intensity      PBSC unmodified            AML  1
 ## 6       799   M Reduced Intensity      PBSC unmodified         Others  4
 ##   age_range institution        set
-## 1      >=65       MSKCC validation
-## 2      >=65       MSKCC  discovery
-## 3      >=65       MSKCC validation
-## 4      >=65       MSKCC  discovery
-## 5      >=65       MSKCC validation
-## 6      >=65       MSKCC validation
+## 1     45-65       MSKCC validation
+## 2       >65       MSKCC  discovery
+## 3       >65       MSKCC validation
+## 4     45-65       MSKCC  discovery
+## 5       >65       MSKCC validation
+## 6     45-65       MSKCC validation
 ```
 
 ```r
@@ -167,7 +167,7 @@ table(tblpatient$set)
 ```
 
 ```r
-tbleuclidean_distance = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tbleuclidean_distance_10clusters_post_filter_7454samples_102422.csv")
+tbleuclidean_distance = read.csv("../../data/tbleuclidean_distance_10clusters_kmeans.csv")
 head(tbleuclidean_distance)
 ```
 
@@ -189,7 +189,7 @@ head(tbleuclidean_distance)
 ```
 
 ```r
-tblcounts = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblcounts = read.csv("../../data/tblcounts.csv")
 head(tblcounts)
 ```
 
@@ -218,7 +218,7 @@ head(tblcounts)
 ```
 
 ```r
-tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/tblsample.csv")
 head(tblsample)
 ```
 
@@ -658,7 +658,7 @@ To plot Fig. 3b and Fig.S3, we arranged drug exposures by drug class.
 self_coefficient_to_plot = t(self_coefficient_matrix)
 attractor_coefficient_to_plot = t(attractor_coefficient_matrix)
 
-tblgraph_drug_exposure_classification = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblgraph_drug_exposure_classification.csv") 
+tblgraph_drug_exposure_classification = read.csv("../../data/tblgraph_drug_exposure_classification.csv") 
 
 drug_group_annotation = tblgraph_drug_exposure_classification %>% select(group, ind)
 rownames(drug_group_annotation) = tblgraph_drug_exposure_classification$exposure_name
@@ -674,23 +674,53 @@ names(set$group) = unique(tblgraph_drug_exposure_classification$group)
 
 ind_df = match(rownames(drug_group_annotation), rownames(self_coefficient_to_plot)) 
 
-out_self = pheatmap(self_coefficient_to_plot[c(1,2,ind_df),], col = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.3)(150), 
+self_coefficient_to_plot = self_coefficient_to_plot[c(1,2,ind_df),]
+
+out_self = pheatmap(self_coefficient_to_plot, col = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.3)(150), 
                     annotation_row = drug_group_annotation, annotation_colors = set, 
                     cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Self Transition")
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/3f72929276630d26495616e4ad520ec43fd9f69f/RMD/example_Fig3/figures/FigS3_self_manual_export.png)<!-- -->
+![](paradigm_example_Fig3_bc_files/figure-html/FigS3_self-1.png)<!-- -->
 
 And cluster attractor transitions. 
 
 
 ```r
-out_attractor = pheatmap(attractor_coefficient_to_plot[c(1,2,ind_df),], col = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.3)(150), 
+attractor_coefficient_to_plot = attractor_coefficient_to_plot[c(1,2,ind_df),]
+
+out_attractor = pheatmap(attractor_coefficient_to_plot, col = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.3)(150), 
                          annotation_row = drug_group_annotation, annotation_colors = set,
                          cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Attractor Transition")    
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/3f72929276630d26495616e4ad520ec43fd9f69f/RMD/example_Fig3/figures/FigS3_attractor_manual_export.png)<!-- -->
+![](paradigm_example_Fig3_bc_files/figure-html/FigS3_attractor-1.png)<!-- -->
+
+Figures 3b-c presented a portion of this data, for the list of 20 drugs we wanted to highlight in our main text, due to their differential effects on bacteria genera and alpha-diversity. 
+
+
+```r
+main20_names = c("metronidazole", "ursodiol", "diphenoxylate_atropine", "polyethylene_glycol", "fentanyl", "methotrexate", "cyclosporine", "antithymocyte_globulin_rabbit", "hydralazine", "gabapentin", "metoprolol", "docusate_sodium", "sulfamethoxazole_trimethoprim", "hydroxyzine", "levetiracetam", "estradiol", "palifermin", "meropenem", "zolpidem", "famotidine")
+
+main20_ind = which(rownames(self_coefficient_to_plot) %in%  main20_names)
+  
+out_self_main_text = pheatmap(self_coefficient_to_plot[main20_ind,], col = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.3)(150), 
+                    annotation_row = drug_group_annotation, annotation_colors = set, 
+                    cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Self Transition")
+```
+
+![](paradigm_example_Fig3_bc_files/figure-html/Fig3b_self-1.png)<!-- -->
+
+
+```r
+main20_ind = which(rownames(attractor_coefficient_to_plot) %in%  main20_names)
+  
+out_attractor_main_text = pheatmap(attractor_coefficient_to_plot[main20_ind,], col = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.3)(150), 
+                    annotation_row = drug_group_annotation, annotation_colors = set, 
+                    cluster_cols = F, cluster_rows = F, breaks = seq(-3,4,by=0.05), main = "Attractor Transition")
+```
+
+![](paradigm_example_Fig3_bc_files/figure-html/Fig3b_attractor-1.png)<!-- -->
 
 We trained the model and learned the associations between a drug exposure and a given cluster self and attractor transitions. A negative coefficient value indicates that a drug exposure is associated with decreased cluster self/attractor transition probability, and a positive coefficient value indicates that a drug exposure is associated with increased cluster self/attracotr transition probability.  
   
@@ -794,7 +824,34 @@ ggplot(data = response_score_feature_aggregate_to_plot,
 ## Coordinate system already present. Adding new coordinate system, which will replace the existing one.
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/3f72929276630d26495616e4ad520ec43fd9f69f/RMD/example_Fig3/figures/FigS4_response_score_manual_export.png)<!-- -->
+![](paradigm_example_Fig3_bc_files/figure-html/FigS4-1.png)<!-- -->
+
+We could plot Fig 3c for a subset of 20 highlighted medications.
+
+
+```r
+response_score_feature_aggregate_to_plot_main20 = response_score_feature_aggregate_to_plot %>% 
+  filter(exposure_name %in% main20_names)
+
+ggplot(data = response_score_feature_aggregate_to_plot_main20, 
+       aes(x=variable, y=factor(exposure_name, levels = rev(drug_level)), fill=value )) +
+  geom_tile(stat = "identity") + theme_classic() + 
+  theme(plot.title=element_text(size=16,face="bold"),
+        axis.title.y=element_blank(),
+        axis.ticks.y=element_blank()) +
+  geom_text(aes(label = sign_coef), color = "black", size = 4) +
+  coord_flip() + coord_fixed() +
+  scale_fill_gradientn(colours = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.5)(30), 
+                       limits = c(-3, 5), breaks = seq(-2,4,by=2)) + 
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), axis.title.y = element_blank(), axis.title.x = element_blank())
+```
+
+```
+## Coordinate system already present. Adding new coordinate system, which will replace the existing one.
+```
+
+![](paradigm_example_Fig3_bc_files/figure-html/Fig3c-1.png)<!-- -->
 
 As a sanity check, we correlated the bacteria response scores for alpha-diversity and for Enterococcus relative abundance. We expected and observed a significant negative correlation, indicating that drug exposures which are associated with increased Enterococcus relative abundnace, are associated with decreased alpha-diversity, and vice-versa. In allo-HCT, Enterococcus expansion typically leads to a low-diversity state of Enterococcus domination and dysbiosis. 
 
@@ -814,5 +871,5 @@ ggplot(data = response_score_feature_aggregate,
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](https://github.com/ChiLNguyen/PARADIGM/blob/1068daee45b20d6bdf489d179e88fd4fe9cb6bb4/RMD/example_Fig3/figures/Fig3d-1.png)<!-- -->
+![](paradigm_example_Fig3_bc_files/figure-html/Fig3d-1.png)<!-- -->
 

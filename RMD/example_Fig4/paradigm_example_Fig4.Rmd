@@ -1,7 +1,7 @@
 ---
 title: 'PARADIGM example: Fig4'
 author: "Chi L. Nguyen"
-date: "10/28/2022"
+date: "`r Sys.Date()`"
 output:
   html_document:
     keep_md: yes
@@ -22,7 +22,7 @@ StrainPhlAn (https://github.com/biobakery/MetaPhlAn/wiki/StrainPhlAn-4) were use
 
 strain_dynamics = read.csv("../../data/tblstrain_dynamics.csv")
 
-tblresponse_score = read.csv("../../data/21445176/tblresponse_scores_4microbiome_features_2039samples_102422.csv")
+tblresponse_score = read.csv("../../data/tblresponse_scores_4features_PARADIGM.csv")
 
 ```
 
