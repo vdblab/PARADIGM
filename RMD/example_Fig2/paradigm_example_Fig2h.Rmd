@@ -18,7 +18,7 @@ Cohort characteristics are outlined in 'tblsample' table.
 
 ```{r, echo=TRUE}
 
-tblsample = read.csv("../../data/21445161/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/tblsample.csv")
 
 table(tblsample$set)
 

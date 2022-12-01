@@ -1,7 +1,7 @@
 ---
 title: "PARADIGM example: Figure 2"
 author: "Chi L. Nguyen"
-date: "2022-11-28"
+date: "2022-12-01"
 output:
   html_document:
     keep_md: yes
@@ -14,11 +14,11 @@ Cohort characteristics are outlined in 'tblsample' table; ASV counts and taxonom
 
 
 ```r
-tblcounts = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblcounts_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblcounts = read.csv("../../data/tblcounts.csv")
 
-tblsample = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblsample_cohort_master_table_deid_MSKCC_9167_Duke_473_post_filter_102422.csv")
+tblsample = read.csv("../../data/tblsample.csv")
 
-tblshotgun = read.csv("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Data - ASV/Sept7_rebuttal/deposited dataset/tblshotgun_MetaPhlAn_classification_filtered_1180samples_102422.csv")
+tblshotgun = read.csv("../../data/tblshotgun_MetaPhlAn.csv")
 
 head(tblcounts)
 ```
