@@ -1,7 +1,7 @@
 ---
 title: 'PARADIGM example: Figure 3b-c'
 author: "Chi L. Nguyen"
-date: "2022-12-01"
+date: "2022-12-04"
 output:
   html_document:
     keep_md: yes
@@ -802,9 +802,6 @@ The 'response_score_feature_aggregate' table contains bacteria response score va
 ```r
 drug_level = rownames(drug_group_annotation)
 response_score_feature_aggregate_to_plot = melt(response_score_feature_aggregate, id = "exposure_name")
-response_score_feature_aggregate_to_plot = response_score_feature_aggregate_to_plot %>% 
-  mutate(sign_coef = case_when(value < 0 ~ "-", 
-                               TRUE ~ "+"))
 
 ggplot(data = response_score_feature_aggregate_to_plot, 
        aes(x=variable, y=factor(exposure_name, levels = rev(drug_level)), fill=value )) +
@@ -812,7 +809,6 @@ ggplot(data = response_score_feature_aggregate_to_plot,
   theme(plot.title=element_text(size=16,face="bold"),
         axis.title.y=element_blank(),
         axis.ticks.y=element_blank()) +
-  geom_text(aes(label = sign_coef), color = "black", size = 4) +
   coord_flip() + coord_fixed() +
   scale_fill_gradientn(colours = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.5)(30), 
                        limits = c(-3, 5), breaks = seq(-2,4,by=2)) + 
@@ -839,7 +835,6 @@ ggplot(data = response_score_feature_aggregate_to_plot_main20,
   theme(plot.title=element_text(size=16,face="bold"),
         axis.title.y=element_blank(),
         axis.ticks.y=element_blank()) +
-  geom_text(aes(label = sign_coef), color = "black", size = 4) +
   coord_flip() + coord_fixed() +
   scale_fill_gradientn(colours = colorRampPalette(c("navy", "white", "firebrick3"), bias = 1.5)(30), 
                        limits = c(-3, 5), breaks = seq(-2,4,by=2)) + 
