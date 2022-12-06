@@ -1,7 +1,7 @@
 ---
 title: 'PARADIGM example: Figure 3e-f (comparison with in vitro study)'
 author: "Chi L. Nguyen"
-date: "2022-12-01"
+date: "2022-12-06"
 output:
   html_document:
     keep_md: yes

@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE, dev = c('png', 'postscript'))
 library(tidyverse)
 library(ggpubr)
 library(rfigshare)
-source("~/Desktop/Backup from server /backup_Oct2020/First rotation - VDB/Script/github_deposit/paradigm_drug_cluster_association_v6.R", echo=F)
+source("../../R/paradigm_drug_cluster_association_v6.R", echo=F)
 ```
 
 Publicly available data from the Maier et al., 2018 Nature (DOI: 10.1038/nature25979) can be downloaded from:  
