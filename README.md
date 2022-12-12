@@ -11,7 +11,6 @@ medications, microbiome and mortality in cancer patients".
 ## Data download 
 Data can be downloaded from Figshare and saved to the `data` folder (which should be in the same folder as the GitHub repository `R` and `RMD` folders): 
  - https://doi.org/10.6084/m9.figshare.21657806.v1
- - This is a private sharing link; official URL and DOI will be updated here after the data is published. 
  
 ## Data description
 
